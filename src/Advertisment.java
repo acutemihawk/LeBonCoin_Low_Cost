@@ -11,6 +11,17 @@ public class Advertisment
 	private ArrayList<Offer> listMyOffer;
 	
 	
+	public Advertisment(int idAd, int idOwn, String ty, String categ, float pri, String desc, ArrayList<Offer> offerList)
+	{
+		idAdvertisment = idAd;
+		idOwner = idOwn;
+		type = ty;
+		category = categ;
+		price = pri;
+		description = desc;
+		listMyOffer = offerList;
+	}
+	
 	public int getIdAdvertisment()
 	{
 		return idAdvertisment;

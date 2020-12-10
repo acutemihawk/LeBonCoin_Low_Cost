@@ -7,6 +7,14 @@ public class Offer
 	private int newPrice;
 	
 	
+	public Offer(int idOff, int idAd, int idBuy, int newP)
+	{
+		idOffer = idOff;
+		idAdvertisment = idAd;
+		idBuyer = idBuy;
+		newPrice = newP;
+	}
+	
 	public int getIdOffer()
 	{
 		return idOffer;
@@ -46,6 +54,8 @@ public class Offer
 	{
 		this.newPrice = newPrice;
 	}
+	
+	
 	
 	
 	

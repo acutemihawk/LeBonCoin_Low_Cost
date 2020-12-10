@@ -8,7 +8,7 @@ public class Advertisment
 	private String category;
 	private float price;
 	private String description;
-	private ArrayList<Offer> ListMyOffer;
+	private ArrayList<Offer> listMyOffer;
 	
 	
 	

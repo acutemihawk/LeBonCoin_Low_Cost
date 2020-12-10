@@ -2,42 +2,43 @@ import java.util.ArrayList;
 
 public class Advertisment
 {
-	private	int idAdvertisment;
-	private int idOwner;
+	private	long idAdvertisment;
+	private long idOwner;
+	private float price;
 	private String type;
 	private String category;
-	private float price;
 	private String description;
+	private AdvertismentDAO myAdvDAO;
 	private ArrayList<Offer> listMyOffer;
 	
 	
-	public Advertisment(int idAd, int idOwn, String ty, String categ, float pri, String desc, ArrayList<Offer> offerList)
+	public Advertisment(long idAd, long idOwn, String Ad_type, String Ad_category, float Ad_price, String Ad_desc)
 	{
 		idAdvertisment = idAd;
 		idOwner = idOwn;
-		type = ty;
-		category = categ;
-		price = pri;
-		description = desc;
-		listMyOffer = offerList;
+		type = Ad_type;
+		category = Ad_category;
+		price = Ad_price;
+		description = Ad_desc;
+		listMyOffer = new ArrayList<Offer>();
 	}
 	
-	public int getIdAdvertisment()
+	public long getIdAdvertisment()
 	{
 		return idAdvertisment;
 	}
 	
-	public void setIdAdvertisment(int idAdvertisment)
+	public void setIdAdvertisment(long idAdvertisment)
 	{
 		this.idAdvertisment = idAdvertisment;
 	}
 	
-	public int getIdOwner()
+	public long getIdOwner()
 	{
 		return idOwner;
 	}
 	
-	public void setIdOwner(int idOwner)
+	public void setIdOwner(long idOwner)
 	{
 		this.idOwner = idOwner;
 	}
@@ -82,6 +83,16 @@ public class Advertisment
 		this.description = description;
 	}
 	
+	public AdvertismentDAO getMyAdvDAO()
+	{
+		return myAdvDAO;
+	}
+	
+	public void setMyAdvDAO(AdvertismentDAO myAdvDAO)
+	{
+		this.myAdvDAO = myAdvDAO;
+	}
+	
 	public ArrayList<Offer> getListMyOffer()
 	{
 		return listMyOffer;
@@ -92,6 +103,10 @@ public class Advertisment
 		this.listMyOffer = listMyOffer;
 	}
 	
+	public void publishAdvertisment()
+	{
+		//à faire
+	}
 	
 	
 	

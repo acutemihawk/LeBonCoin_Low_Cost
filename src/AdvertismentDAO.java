@@ -19,10 +19,10 @@ public class AdvertismentDAO
 		return true;
 	}
 	
-	public boolean getLastID()
+	public long getLastID()
 	{
 		//à faire
-		return true;
+		return 0;
 	}
 	
 	

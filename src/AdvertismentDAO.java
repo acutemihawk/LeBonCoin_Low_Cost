@@ -1,22 +1,44 @@
+import java.sql.*;
+
+import com.mysql.cj.jdbc.integration.c3p0.MysqlConnectionTester;
 
 public class AdvertismentDAO
 {
-	public boolean insertAd(Advertisment Ad)
+	public boolean insertAd(Advertisment ad)
 	{
 		Database myDB = new Database();
-		myDB.connect();
+		Connection myConnection = myDB.connect();
 		
-		
-		return true;
+		try
+		{
+			String sqlCommand = "INSERT INTO advertisment VALUES ('"
+								+ ad.getIdAdvertisment()+ "', '"
+								+ ad.getLocalisation() + "', '"
+								+ ad.getPrice() + "', '"
+								+ ad.getDescription() + "', '"
+								+ ad.getCategory() + "', '"
+								+ ad.getIdOwner() + "')";
+			PreparedStatement myStatement = myConnection.prepareStatement(sqlCommand);
+			myStatement.executeQuery();
+			
+			myDB.disconnect();
+			return true;
+		}
+		catch (SQLException e)
+		{
+			System.out.println(e.getMessage());
+			myDB.disconnect();
+			return false;
+		}
 	}
 	
-	public boolean deleteAd(Advertisment Ad)
+	public boolean deleteAd(Advertisment ad)
 	{
 		//à faire
 		return true;
 	}
 	
-	public boolean updateAd(Advertisment Ad)
+	public boolean updateAd(Advertisment ad)
 	{
 		//à faire
 		return true;

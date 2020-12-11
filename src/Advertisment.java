@@ -7,6 +7,7 @@ public class Advertisment
 	private float price;
 	private String type;
 	private String category;
+	private String localisation;
 	private String description;
 	private AdvertismentDAO myAdvDAO;
 	private ArrayList<Offer> listMyOffer;
@@ -72,6 +73,16 @@ public class Advertisment
 	public void setPrice(float price)
 	{
 		this.price = price;
+	}
+	
+	public String getLocalisation()
+	{
+		return localisation;
+	}
+	
+	public void setLocalisation(String localisation)
+	{
+		this.localisation = localisation;
 	}
 	
 	public String getDescription()

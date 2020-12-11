@@ -121,10 +121,16 @@ public class Advertisment
 		this.listMyOffer = listMyOffer;
 	}
 	
-	public void publishAdvertisment()
+	public boolean publishAdvertisment()
 	{
-		myAdvDAO.insertAd(this);
-		idAdvertisment = myAdvDAO.getLastID();
+		if(myAdvDAO.insertAd(this) == true)
+		{
+			idAdvertisment = myAdvDAO.getLastID();
+			
+			return true;
+		}
+		else
+			return false;
 	}
 	
 	

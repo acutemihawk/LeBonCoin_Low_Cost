@@ -20,16 +20,13 @@ public class User
 		this.mail = mail;
 		listAdvertisment = new ArrayList<Integer>();
 		listOffer = new ArrayList<Integer>();
-		isConnected =true;
 	}
 	
 	public User()
 	{
 		listAdvertisment = new ArrayList<Integer>();
 		listOffer = new ArrayList<Integer>();
-		isConnected = true;
 	}
-	
 	
 	public long getIdUser() 
 	{

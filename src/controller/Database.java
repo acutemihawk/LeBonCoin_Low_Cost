@@ -32,7 +32,7 @@ public class Database
 		}
 	}
 	
-	public boolean disconnet()
+	public boolean disconnect()
 	{
 		try
 		{
@@ -51,7 +51,8 @@ public class Database
 	{
 		if(myCon == null)
 		{
-			System.out.println("Error, could not reach to database");		
+			System.out.println("Error, could not reach to database");	
+			System.exit(-1);
 		}
 		try
 		{	

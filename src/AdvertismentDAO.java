@@ -1,7 +1,5 @@
 import java.sql.*;
 
-import com.mysql.cj.jdbc.integration.c3p0.MysqlConnectionTester;
-
 public class AdvertismentDAO
 {
 	public boolean insertAd(Advertisment ad)
@@ -12,7 +10,6 @@ public class AdvertismentDAO
 		try
 		{
 			String sqlCommand = "INSERT INTO advertisment VALUES ('"
-								+ ad.getIdAdvertisment()+ "', '"
 								+ ad.getLocalisation() + "', '"
 								+ ad.getPrice() + "', '"
 								+ ad.getDescription() + "', '"
@@ -41,7 +38,7 @@ public class AdvertismentDAO
 		
 		try
 		{
-			String sqlCommand = "DELETE FROM advertisment WHERE IdAdvertisment=" + ad.getIdAdvertisment() + "');";
+			String sqlCommand = "DELETE FROM advertisment WHERE IdAdvertisment='" + ad.getIdAdvertisment() + "';";
 			Statement myStatement = myConnection.createStatement();
 			myStatement.executeUpdate(sqlCommand);
 			

@@ -57,14 +57,67 @@ public class AdvertismentDAO
 	
 	public boolean updateAd(Advertisment ad)
 	{
-		//à faire
-		return true;
+		Database myDB = new Database();
+		Connection myConnection = myDB.connect();
+		
+		try
+		{
+			String sqlCommand;
+			Statement myStatement = myConnection.createStatement();
+			
+			sqlCommand = "UPDATE advertisment SET type='" + ad.getType() + "' WHERE idAdvertisment='" + ad.getIdAdvertisment() + "';";
+			myStatement.executeUpdate(sqlCommand);
+			sqlCommand = "UPDATE advertisment SET localisation='" + ad.getLocalisation() + "' WHERE idAdvertisment='" + ad.getIdAdvertisment() + "';";
+			myStatement.executeUpdate(sqlCommand);
+			sqlCommand = "UPDATE advertisment SET price='" + ad.getPrice() + "' WHERE idAdvertisment='" + ad.getIdAdvertisment() + "';";
+			myStatement.executeUpdate(sqlCommand);
+			sqlCommand = "UPDATE advertisment SET description='" + ad.getDescription() + "' WHERE idAdvertisment='" + ad.getIdAdvertisment() + "';";
+			myStatement.executeUpdate(sqlCommand);
+			sqlCommand = "UPDATE advertisment SET category='" + ad.getCategory() + "' WHERE idAdvertisment='" + ad.getIdAdvertisment() + "';";
+			myStatement.executeUpdate(sqlCommand);
+			
+			myStatement.close();
+			myDB.disconnect();
+			
+			return true;
+		}
+		catch (SQLException e)
+		{
+			System.out.println(e.getMessage());
+			myDB.disconnect();
+			return false;
+		}
 	}
 	
 	public long getLastID()
 	{
-		//à faire
-		return 0;
+		Database myDB = new Database();
+		Connection myConnection = myDB.connect();
+		long id = -1;
+		
+		try
+		{
+			String sqlCommand = " SELECT iduser FROM advertisment ORDER BY DESC";
+			
+			Statement myStatement = myConnection.createStatement();
+			
+			ResultSet rs  = myStatement.executeQuery(sqlCommand);
+			
+			if(rs.next())
+			{
+				id = rs.getInt(1);
+			}
+			
+			myStatement.close();
+			myDB.disconnect();
+			return id;
+		}
+		catch (SQLException e) 
+		{
+			System.out.println(e.getMessage());
+			myDB.disconnect();
+			return -1;//----------------------------------------------------changer les return -1 en 0 car ce sont des long et non des ints
+		}
 	}
 	
 	

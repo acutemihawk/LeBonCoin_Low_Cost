@@ -93,11 +93,11 @@ public class AdvertismentDAO
 	{
 		Database myDB = new Database();
 		Connection myConnection = myDB.connect();
-		long id = -1;
+		long id = 0;
 		
 		try
 		{
-			String sqlCommand = " SELECT iduser FROM advertisment ORDER BY DESC";
+			String sqlCommand = " SELECT idAdvertisment FROM advertisment ORDER BY DESC";
 			
 			Statement myStatement = myConnection.createStatement();
 			
@@ -116,7 +116,7 @@ public class AdvertismentDAO
 		{
 			System.out.println(e.getMessage());
 			myDB.disconnect();
-			return -1;//----------------------------------------------------changer les return -1 en 0 car ce sont des long et non des ints
+			return 0;
 		}
 	}
 	

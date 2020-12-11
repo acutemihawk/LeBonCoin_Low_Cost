@@ -13,17 +13,23 @@ public class Advertisment
 	private ArrayList<Offer> listMyOffer;
 	
 	
-	public Advertisment(long idAd, long idOwn, String Ad_type, String Ad_category, float Ad_price, String Ad_desc, AdvertismentDAO AdDAO)
+	public Advertisment(long idOwn, String Ad_type, String Ad_category, String Ad_localisation, float Ad_price, String Ad_desc)
 	{
-		idAdvertisment = idAd;
 		idOwner = idOwn;
 		type = Ad_type;
 		category = Ad_category;
+		localisation = Ad_localisation;
 		price = Ad_price;
 		description = Ad_desc;
 		listMyOffer = new ArrayList<Offer>();
-		myAdvDAO = AdDAO;
+		myAdvDAO = new AdvertismentDAO();
 	}
+	
+	public Advertisment() 
+    {
+        listMyOffer = new ArrayList<Offer>();
+        myAdvDAO = new AdvertismentDAO();
+    }
 	
 	public long getIdAdvertisment()
 	{
@@ -118,6 +124,7 @@ public class Advertisment
 	public void publishAdvertisment()
 	{
 		myAdvDAO.insertAd(this);
+		idAdvertisment = myAdvDAO.getLastID();
 	}
 	
 	

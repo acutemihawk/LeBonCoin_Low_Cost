@@ -55,7 +55,7 @@ public class AdvertismentDAO
 		}
 	}
 	
-	public boolean updateAd(Advertisment ad)
+	/*public boolean updateAd(Advertisment ad)
 	{
 		Database myDB = new Database();
 		Connection myConnection = myDB.connect();
@@ -87,7 +87,7 @@ public class AdvertismentDAO
 			myDB.disconnect();
 			return false;
 		}
-	}
+	}*/
 	
 	public long getLastID()
 	{

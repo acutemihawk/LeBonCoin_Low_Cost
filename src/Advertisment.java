@@ -12,7 +12,7 @@ public class Advertisment
 	private ArrayList<Offer> listMyOffer;
 	
 	
-	public Advertisment(long idAd, long idOwn, String Ad_type, String Ad_category, float Ad_price, String Ad_desc)
+	public Advertisment(long idAd, long idOwn, String Ad_type, String Ad_category, float Ad_price, String Ad_desc, AdvertismentDAO AdDAO)
 	{
 		idAdvertisment = idAd;
 		idOwner = idOwn;
@@ -21,6 +21,7 @@ public class Advertisment
 		price = Ad_price;
 		description = Ad_desc;
 		listMyOffer = new ArrayList<Offer>();
+		myAdvDAO = AdDAO;
 	}
 	
 	public long getIdAdvertisment()

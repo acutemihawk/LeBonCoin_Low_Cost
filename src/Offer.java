@@ -7,12 +7,13 @@ public class Offer
 	private float newPrice;
 	private OfferDAO myOfferDao;
 	
-	public Offer(long idOff, long idAd, long idBuy, float Offer_newPrice)
+	public Offer(long idOff, long idAd, long idBuy, float Offer_newPrice, OfferDAO OfferDAO)
 	{
 		idOffer = idOff;
 		idAdvertisment = idAd;
 		idBuyer = idBuy;
 		newPrice = Offer_newPrice;
+		myOfferDao = OfferDAO;
 	}
 	
 	public long getIdOffer()

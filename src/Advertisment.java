@@ -106,7 +106,7 @@ public class Advertisment
 	
 	public void publishAdvertisment()
 	{
-		//à faire
+		myAdvDAO.insertAd(this);
 	}
 	
 	

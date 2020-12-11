@@ -31,7 +31,7 @@ public class Database
 		}
 	}
 	
-	public boolean disconnet()
+	public boolean disconnect()
 	{
 		try
 		{

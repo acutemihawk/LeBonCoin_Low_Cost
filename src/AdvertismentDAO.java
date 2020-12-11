@@ -3,7 +3,10 @@ public class AdvertismentDAO
 {
 	public boolean insertAd(Advertisment Ad)
 	{
-		//à faire
+		Database myDB = new Database();
+		myDB.connect();
+		
+		
 		return true;
 	}
 	

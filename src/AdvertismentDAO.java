@@ -18,10 +18,12 @@ public class AdvertismentDAO
 								+ ad.getDescription() + "', '"
 								+ ad.getCategory() + "', '"
 								+ ad.getIdOwner() + "')";
-			PreparedStatement myStatement = myConnection.prepareStatement(sqlCommand);
-			myStatement.executeQuery();
+			Statement myStatement = myConnection.createStatement();
+			myStatement.executeUpdate(sqlCommand);
 			
+			myStatement.close();
 			myDB.disconnect();
+			
 			return true;
 		}
 		catch (SQLException e)

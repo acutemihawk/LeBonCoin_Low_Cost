@@ -9,14 +9,16 @@ public class AdvertismentDAO
 		
 		try
 		{
-			String sqlCommand = "INSERT INTO advertisment VALUES ('"
-								+ ad.getLocalisation() + "', '"
-								+ ad.getPrice() + "', '"
-								+ ad.getDescription() + "', '"
-								+ ad.getCategory() + "', '"
-								+ ad.getIdOwner() + "');";
-			Statement myStatement = myConnection.createStatement();
-			myStatement.executeUpdate(sqlCommand);
+			String sqlCommand = "INSERT INTO advertisment (type, localisation, price, description, category, iduser) VALUES (?,?,?,?,?,?)";
+			PreparedStatement myStatement = myConnection.prepareStatement(sqlCommand, ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+			
+			myStatement.setString(1, ad.getType());
+			myStatement.setString(2, ad.getLocalisation());
+			myStatement.setFloat(3, ad.getPrice());
+			myStatement.setString(4, ad.getDescription());
+			myStatement.setString(5, ad.getCategory());
+			myStatement.setLong(6, ad.getIdOwner());
+			myStatement.executeUpdate();
 			
 			myStatement.close();
 			myDB.disconnect();
@@ -39,7 +41,7 @@ public class AdvertismentDAO
 		try
 		{
 			String sqlCommand = "DELETE FROM advertisment WHERE IdAdvertisment='" + ad.getIdAdvertisment() + "';";
-			Statement myStatement = myConnection.createStatement();
+			Statement myStatement = myConnection.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
 			myStatement.executeUpdate(sqlCommand);
 			
 			myStatement.close();
@@ -97,7 +99,7 @@ public class AdvertismentDAO
 		
 		try
 		{
-			String sqlCommand = " SELECT idAdvertisment FROM advertisment ORDER BY DESC";
+			String sqlCommand = " SELECT idAdvertisment FROM advertisment ORDER BY idAdvertisment DESC";
 			
 			Statement myStatement = myConnection.createStatement();
 			

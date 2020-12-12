@@ -133,6 +133,14 @@ public class Advertisment
 			return false;
 	}
 	
+	public boolean removeAdvertisment()
+	{
+		if(myAdvDAO.deleteAd(this)==true)
+			return true;
+		else
+			return false;
+	}
+	
 	
 	
 }

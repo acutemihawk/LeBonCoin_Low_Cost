@@ -5,20 +5,19 @@ public class Offer
 	private long idAdvertisment;
 	private long idBuyer;
 	private float newPrice;
-	private OfferDAO myOfferDao;
+	private OfferDAO myOfDAO;
 	
-	public Offer(long idOff, long idAd, long idBuy, float Offer_newPrice)
+	public Offer(long idAd, long idBuy, float Offer_newPrice)
 	{
-		idOffer = idOff;
 		idAdvertisment = idAd;
 		idBuyer = idBuy;
 		newPrice = Offer_newPrice;
-		myOfferDao = new OfferDAO();
+		myOfDAO = new OfferDAO();
 	}
 	
 	public Offer()
 	{
-		myOfferDao = new OfferDAO();
+		myOfDAO = new OfferDAO();
 	}
 	
 	public long getIdOffer()
@@ -63,17 +62,32 @@ public class Offer
 	
 	public OfferDAO getMyOfferDao()
 	{
-		return myOfferDao;
+		return myOfDAO;
 	}
 	
 	public void setMyOfferDao(OfferDAO myOfferDao)
 	{
-		this.myOfferDao = myOfferDao;
+		this.myOfDAO = myOfferDao;
 	}
 	
-	public void addOffer()
+	public boolean addOffer()
 	{
-		//à faire
+		if(myOfDAO.insertOf(this) == true)
+		{
+			idOffer = myOfDAO.getLastID();
+			
+			return true;
+		}
+		else
+			return false;
+	}
+	
+	public boolean removeOffer()
+	{
+		if(myOfDAO.deleteOf(this)==true)
+			return true;
+		else
+			return false;
 	}
 	
 	

@@ -2,8 +2,6 @@ package model;
 
 import java.util.ArrayList;
 
-import controller.AdvertismentDAO;
-
 public class Advertisment
 {
 	private	long idAdvertisment;
@@ -13,9 +11,7 @@ public class Advertisment
 	private String category;
 	private String localisation;
 	private String description;
-	private AdvertismentDAO myAdvDAO;
 	private ArrayList<Offer> listMyOffer;
-	
 	
 	public Advertisment(long idOwn, String Ad_type, String Ad_category, String Ad_localisation, float Ad_price, String Ad_desc)
 	{
@@ -26,35 +22,12 @@ public class Advertisment
 		price = Ad_price;
 		description = Ad_desc;
 		listMyOffer = new ArrayList<Offer>();
-		myAdvDAO = new AdvertismentDAO();
 	}
 	
 	public Advertisment() 
     {
         listMyOffer = new ArrayList<Offer>();
-        myAdvDAO = new AdvertismentDAO();
     }
-	
-	public boolean publishAdvertisment()
-	{
-		if(myAdvDAO.insertAd(this) == true)
-		{
-			idAdvertisment = myAdvDAO.getLastID();
-			return true;
-		}
-		else
-			return false;
-	}
-	
-	public boolean removeAdvertisment()
-	{
-		if(myAdvDAO.deleteAd(this)==true)
-			return true;
-		else
-		{
-			return false;
-		}
-	}
 	
 	public long getIdAdvertisment()
 	{
@@ -124,16 +97,6 @@ public class Advertisment
 	public void setDescription(String description)
 	{
 		this.description = description;
-	}
-	
-	public AdvertismentDAO getMyAdvDAO()
-	{
-		return myAdvDAO;
-	}
-	
-	public void setMyAdvDAO(AdvertismentDAO myAdvDAO)
-	{
-		this.myAdvDAO = myAdvDAO;
 	}
 	
 	public ArrayList<Offer> getListMyOffer()

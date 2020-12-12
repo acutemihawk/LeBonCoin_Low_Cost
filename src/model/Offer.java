@@ -1,17 +1,15 @@
 package model;
 
-
 public class Offer
 {
 	private long idOffer;
 	private long idAdvertisment;
 	private long idBuyer;
 	private float newPrice;
-	//private OfferDAO myOfferDao;
 	
-	public Offer(long idOff, long idAd, long idBuy, float Offer_newPrice)
+	
+	public Offer(long idAd, long idBuy, float Offer_newPrice)
 	{
-		idOffer = idOff;
 		idAdvertisment = idAd;
 		idBuyer = idBuy;
 		newPrice = Offer_newPrice;
@@ -19,7 +17,6 @@ public class Offer
 	
 	public Offer()
 	{
-		
 	}
 	
 	public long getIdOffer()
@@ -61,22 +58,6 @@ public class Offer
 	{
 		this.newPrice = newPrice;
 	}
-	/*
-	public OfferDAO getMyOfferDao()
-	{
-		return myOfferDao;
-	}
-	
-	public void setMyOfferDao(OfferDAO myOfferDao)
-	{
-		this.myOfferDao = myOfferDao;
-	}
-	*/
-	public void addOffer()
-	{
-		//à faire
-	}
-	
 	
 	
 }

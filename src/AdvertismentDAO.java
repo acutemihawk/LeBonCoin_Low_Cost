@@ -1,3 +1,5 @@
+import controller.Database;
+
 import java.sql.*;
 
 public class AdvertismentDAO

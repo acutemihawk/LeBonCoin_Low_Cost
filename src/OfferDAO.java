@@ -1,8 +1,6 @@
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import controller.Database;
+
+import java.sql.*;
 
 public class OfferDAO
 {
@@ -59,7 +57,6 @@ public class OfferDAO
 	
 	/*public boolean updateOf(Offer Of)
 	{
-		//à faire
 		return true;
 	}*/
 	

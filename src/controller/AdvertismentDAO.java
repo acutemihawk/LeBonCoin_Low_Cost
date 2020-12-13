@@ -165,9 +165,6 @@ public class AdvertismentDAO
 			System.out.println(e.getMessage());
 			myDB.disconnect();
 			return false;
-		}
-		
+		}	
 	}
-	
-	
 }

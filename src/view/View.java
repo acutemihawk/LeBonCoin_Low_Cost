@@ -1,5 +1,10 @@
 package view;
 
-public class View {
-
+public class View
+{
+	
+	public void MainMenu()
+	{
+		
+	}
 }

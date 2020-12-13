@@ -1,6 +1,5 @@
 
 import controller.*;
-import model.*;
 
 public class Main {
 

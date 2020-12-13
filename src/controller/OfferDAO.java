@@ -1,4 +1,6 @@
-import controller.Database;
+package controller;
+
+import model.Offer;
 
 import java.sql.*;
 
@@ -60,6 +62,7 @@ public class OfferDAO
 		return true;
 	}*/
 	
+	/* renvoie l'id offer de l'offer appelant */
 	public long getLastID()
 	{
 		Database myDB = new Database();
@@ -91,5 +94,30 @@ public class OfferDAO
 		}
 	}
 	
+	public boolean insertInformation(Offer Of) 
+	{
+		Database myDB = new Database();
+		Connection myConnection = myDB.connect();
+		
+		try
+		{
+			String sqlCommand =" INSERT INTO offerinfo (idoffer,price_offer) VALUES (?,?)";
+			PreparedStatement myStatement = myConnection.prepareStatement(sqlCommand, ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+			
+			myStatement.setLong(1, Of.getIdOffer());
+			myStatement.setFloat(2, Of.getNewPrice());
+			myStatement.executeUpdate();
+			
+			myStatement.close();
+			myDB.disconnect();
+			return true;
+		}
+		catch (SQLException e) 
+		{
+			System.out.println(e.getMessage());
+			myDB.disconnect();
+			return false;
+		}
+	}
 	
 }

@@ -1,9 +1,11 @@
-import controller.Database;
+package controller;
 
+import model.Advertisment;
 import java.sql.*;
 
 public class AdvertismentDAO
 {
+	/* créer l'annonce passée en parametere dans la base de donnée */
 	public boolean insertAd(Advertisment ad)
 	{
 		Database myDB = new Database();
@@ -35,6 +37,7 @@ public class AdvertismentDAO
 		}
 	}
 	
+	/* delete de la base de donnée l'annonce passée en parametre */
 	public boolean deleteAd(Advertisment ad)
 	{
 		Database myDB = new Database();
@@ -93,6 +96,7 @@ public class AdvertismentDAO
 		}
 	}*/
 	
+	/*renvoie le dernier id de l'annonce inserée */
 	public long getLastID()
 	{
 		Database myDB = new Database();
@@ -121,6 +125,46 @@ public class AdvertismentDAO
 			System.out.println(e.getMessage());
 			myDB.disconnect();
 			return 0;
+		}
+	}
+	
+	/* verifie que l'annonce passée en parametre existe dans la base de donnée */
+	public boolean verify(Advertisment ad) 
+	{
+		Database myDB = new Database();
+		Connection myConnection = myDB.connect();
+		
+		try
+		{
+			String sqlCommand = " SELECT COUNT(*) FROM advertisment where idAdvertisment=?";
+			
+			PreparedStatement myStatement = myConnection.prepareStatement(sqlCommand);
+			myStatement.setLong(1, ad.getIdAdvertisment());
+			ResultSet myResult  = myStatement.executeQuery();
+			
+			if(myResult.next() != false)
+			{
+				if(myResult.getInt(1) == 1)
+				{	
+					myDB.disconnect();
+					myStatement.close();
+					return true;
+				}
+				else
+				{
+					System.out.println("The advertisment does not exist");
+					myDB.disconnect();
+					myStatement.close();
+					return false;	
+				}
+			}
+			return false;
+		}
+		catch (SQLException e) 
+		{
+			System.out.println(e.getMessage());
+			myDB.disconnect();
+			return false;
 		}
 	}
 	

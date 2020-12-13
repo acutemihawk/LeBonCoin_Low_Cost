@@ -1,4 +1,5 @@
 package controller;
+
 import java.sql.*;
 import model.*;
 import java.util.ArrayList;
@@ -26,6 +27,7 @@ public class UserDAO
 			{
 				 id = rs.getInt(1);
 			}
+			myStatement.close();
 			myBdd.disconnect();
 			return id;
 		}
@@ -57,6 +59,7 @@ public class UserDAO
 			{
 				myList.add(rs.getInt(1));
 			}
+			myStatement.close();
 			myBdd.disconnect();
 			return myList;
 
@@ -86,6 +89,7 @@ public class UserDAO
 			{
 				myList.add(rs.getInt(1));
 			}
+			myStatement.close();
 			myBdd.disconnect();
 			return myList;
 		}
@@ -114,6 +118,7 @@ public class UserDAO
 			{
 				mailTmp = rs.getNString(1);
 			}
+			myStatement.close();
 			myBdd.disconnect();
 			return mailTmp;
 		}
@@ -138,6 +143,7 @@ public class UserDAO
 			myStatement.setString(2, userToCreate.getPassword());
 			myStatement.setString(3, userToCreate.getMail());
 			myStatement.executeUpdate();
+			myStatement.close();
 			return true;
 		}
 		catch (SQLException e) 
@@ -166,12 +172,16 @@ public class UserDAO
 			if(myResult.next() != false)
 			{
 				if(myResult.getInt(1) == 0)
-				{	
+				{
+					myBdd.disconnect();
+					myStatement.close();
 					return true;
 				}
 				else
 				{
 					System.out.println("username is already in use");
+					myBdd.disconnect();
+					myStatement.close();
 					return false;	
 				}
 			}
@@ -180,6 +190,7 @@ public class UserDAO
 		catch (SQLException e) 
 		{
 			System.out.println(e.getMessage());
+			myBdd.disconnect();
 			return false;
 		}
 	}
@@ -201,11 +212,15 @@ public class UserDAO
 			{
 				if(myResult.getInt(1) == 0)
 				{	
+					myBdd.disconnect();
+					myStatement.close();
 					return true;
 				}
 				else
 				{
 					System.out.println("Mail is already in use");
+					myBdd.disconnect();
+					myStatement.close();
 					return false;	
 				}
 			}
@@ -214,6 +229,7 @@ public class UserDAO
 		catch (SQLException e) 
 		{
 			System.out.println(e.getMessage());
+			myBdd.disconnect();
 			return false;
 		}
 	}

@@ -44,12 +44,13 @@ public class AdvertismentDAO
 		
 		try
 		{
-			String sqlCommand = "DELETE FROM advertisment WHERE IdAdvertisment='" + ad.getIdAdvertisment() + "';";
-			Statement myStatement = myConnection.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,ResultSet.CONCUR_UPDATABLE);
-			myStatement.executeUpdate(sqlCommand);
+			String sqlCommand = "DELETE FROM advertisment WHERE IdAdvertisment=?";
+			PreparedStatement myStatement = myConnection.prepareStatement(sqlCommand,ResultSet.TYPE_SCROLL_SENSITIVE,ResultSet.CONCUR_UPDATABLE);
+			myStatement.setLong(1, ad.getIdAdvertisment());
+			myStatement.executeUpdate();
 			
 			myStatement.close();
-			myDB.disconnect();
+			myDB.disconnect();	
 			
 			return true;
 		}

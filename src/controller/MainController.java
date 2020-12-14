@@ -132,7 +132,7 @@ public class MainController
 		
 		if(myOfDAO.insertInformation(myOffer) ==true) 
 		{
-			myOffer.setIdOffer(myOfDAO.getLastID());
+			myOffer.setIdOffer(myOfDAO.getLastOfferID());
 			myUser.getListOffer().add((int) myOffer.getIdOffer());
 			myOfDAO.insertOf(myOffer);
 			
@@ -161,6 +161,56 @@ public class MainController
 		else
 			return false;
 	}
+	
+	// Accepte la proposition avec pour id = idOffer -> supprime toutes les autres propositions sur l'offre et retire l'annonce de l'application
+	public boolean acceptOffer(long idOffer)
+	{
+		if (testConnection() == false)
+			return false;
+		
+		myOffer.setIdOffer(idOffer);
+		
+		if (myOfDAO.getAdvID(myOffer) == 0)
+		{
+			System.out.println("Veuillez accepter une offre qui vous appartient");
+			return false;
+		}
+		
+		Advertisment advToDel = new Advertisment();
+		advToDel.setIdAdvertisment(myOfDAO.getAdvID(myOffer));
+		
+		myOffer.setIdOffer(myOfDAO.getAdvID(myOffer));
+		
+		return myOfDAO.deleteAllOffer(myOffer) && myAdvDAO.deleteAd(advToDel);
+			// mettre dans view System.out.println("Offer number "+idOffer+" successfully accepted, Advertisment "+advToDel.getIdAdvertisment()+" will be removed");
+
+
+	}
+	
+	// supprime l'offre associé a l'annonce ayant pour id idOffer 
+	public boolean refuseOffer(long idOffer)
+	{
+		if (testConnection() == false)
+			return false;
+		
+		Offer offerToDel = new Offer();
+		offerToDel.setIdOffer(idOffer);
+		offerToDel.setIdBuyer(myOfDAO.getUserID(offerToDel));
+
+		if(myUser.getIdUser() != offerToDel.getIdBuyer())
+		{
+			System.out.println("The proposition you wish to refuse isn't yours, please choose one of your proposition ");
+			return false;
+		}
+		return myOfDAO.deleteOf(offerToDel);
+	}
+	
+	/*public boolean search(String localisation, float minPrice, float MaxPrice,String category)
+	{
+		
+		
+	}
+	*/
 	
 	public User getMyUser() 
 	{

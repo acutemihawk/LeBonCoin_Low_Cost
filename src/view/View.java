@@ -7,11 +7,16 @@ import model.*;
 
 public class View
 {
-	private boolean isUserConnected = false;
 	private Scanner myScanner = new Scanner(System.in);
+	private String[] arrOfStr;
+	private MainController mainController = new MainController();
 	
 	public void mainMenu()
 	{
+		System.out.println("1 - Sign in");
+		System.out.println("2 - Continue without signing in");
+		
+		
 		
 	}
 	

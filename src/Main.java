@@ -5,7 +5,7 @@ public class Main {
 
 	public static void main(String[] args) 
 	{
-
+		
 		UserController USR1 = new UserController();
 		USR1.userConnect("kaaris", "12345");
 		
@@ -14,10 +14,10 @@ public class Main {
 		//System.out.println(USR1.getMyUser().getPassword());
 		//System.out.println(USR1.getMyUser().getListAdvertisment());
 		//System.out.println(USR1.getMyUser().getListOffer());
-
-
-
-
+		
+		
+		
+		
 	}
 
 }

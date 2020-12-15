@@ -74,6 +74,12 @@ public class View
 		}
 	}
 	
+	//fonction qui affiche le nouveau menu une fois que l'utilisateur s'est co
+	public void connectedUser()
+	{
+		
+	}
+	
 	//fonction parcourir
 	public void browse()
 	{
@@ -127,7 +133,6 @@ public class View
 		{
 			if(option_number == 1)
 			{
-				//demander les paramètres *********************************
 				search();
 			}
 			else if(option_number == 2)
@@ -155,20 +160,38 @@ public class View
 		}
 	}
 	
-	//fonction search avec paramètres
-	public void search()
-	{
-		//mettre des paramètres dans la fonction
-	}
-	
 	//fonction creation d'un compte
 	public void createAccount()
 	{
 		
 	}
 	
+	//fonction search avec paramètres
+	public void search()
+	{
+		System.out.println("Category:");
+		given_Str = myScanner.nextLine();
+		String category = given_Str;
+		
+		System.out.println("Localisation:");
+		given_Str = myScanner.nextLine();
+		String localisation = given_Str;
+		
+		System.out.println("Minimum price:");
+		given_Str = myScanner.nextLine();
+		String minPrice = given_Str;
+		
+		System.out.println("Maximum price:");
+		given_Str = myScanner.nextLine();
+		String maxPrice = given_Str;
+		
+		String[] arrayToSearch = {category, localisation, minPrice, maxPrice};
+		
+	}
+	
+	
 	//fonction creation d'une annonce
-	public void createAdvertisment()
+	/*public void createAdvertisment()
 	{
 		
 	}
@@ -189,12 +212,8 @@ public class View
 	public void displayAdvertisments()
 	{
 		
-	}
+	}*/
 	
-	//fonction qui affiche le nouveau menu une fois que l'utilisateur s'est co
-	public void connectedUser()
-	{
-		
-	}
+	
 	
 }

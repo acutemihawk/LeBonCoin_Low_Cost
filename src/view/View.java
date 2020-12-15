@@ -1,5 +1,9 @@
 package view;
 
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -73,7 +77,88 @@ public class View
 	//fonction parcourir
 	public void browse()
 	{
+		String[] categoryArray = null;
 		
+		Database myDB = new Database();
+		Connection myConnection = myDB.connect();
+		
+		try
+		{
+			
+			
+			String sqlCommand = "SELECT DISTINCT catégorie FROM advertisment";
+			Statement myStatement = myConnection.createStatement();
+			ResultSet rs  = myStatement.executeQuery(sqlCommand);
+			
+			if(rs.next())
+			{
+				for(int categoryLoop = 1; categoryLoop < rs.getFetchSize(); categoryLoop++)
+				{
+					categoryArray[categoryLoop-1] = rs.getString(categoryLoop);
+				}
+			}
+			
+			myStatement.close();
+			myDB.disconnect();
+		}
+		catch (SQLException e) 
+		{
+			System.out.println(e.getMessage());
+			myDB.disconnect();
+		}
+		
+		System.out.println("--------------------------------------------------");
+		System.out.println("Choose one option from below and press Enter to navigate :");
+		System.out.println("1 - Search with parameters");
+		System.out.println("2 - Return");
+		
+		int numberToDisplay = 0;
+		
+		for(int categoryLoop = 0; categoryLoop < categoryArray.length; categoryLoop++)
+		{
+			numberToDisplay = categoryLoop + 3;
+			System.out.println(numberToDisplay + " - " + categoryArray[categoryLoop]);
+		}
+		System.out.println("--------------------------------------------------");
+		
+		option_number = myScanner.nextInt();
+		
+		try
+		{
+			if(option_number == 1)
+			{
+				//demander les paramètres *********************************
+				search();
+			}
+			else if(option_number == 2)
+			{
+				if(mainController.getMyUser().isConnected())
+					connectedUser();
+				else
+					mainMenu();
+			}
+			else if(option_number == 3)
+			{
+				//check si la valeur entrée est supérieure à 2 
+				//et inférieure au nb de catégories
+				//ensuite on appelle la méthode display qui display les advertisments par catégories
+			}
+			
+		}
+		catch(NumberFormatException myException)
+		{
+			System.out.println("L'argument de la commande Push doit etre entier !");
+		}
+		catch(InputMismatchException myException) //à voir si on doit le garder
+		{
+			System.out.println("L'argument de doit etre un identifiant (nombre entier)");
+		}
+	}
+	
+	//fonction search avec paramètres
+	public void search()
+	{
+		//mettre des paramètres dans la fonction
 	}
 	
 	//fonction creation d'un compte

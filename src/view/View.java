@@ -195,40 +195,28 @@ public class View
 		String localisation = null;
 		String minPrice = null;
 		String maxPrice = null;
-		//*******************************************penser à changer prix en long osef des float***
-
+		
 		try
 		{
-			option_number = myScanner.nextInt();
+			System.out.println("Please, enter some informations:");
 			
-			if(option_number == 1)
-			{
-				System.out.println("Category:");
-				given_Str = myScanner.nextLine();
-				category = given_Str;
-			}
-			else if(option_number == 2)
-			{
-				System.out.println("Localisation:");
-				given_Str = myScanner.nextLine();
-				localisation = given_Str;
-			}
-			else if(option_number == 3)
-			{
-				System.out.println("Minimum price:");
-				given_Str = myScanner.nextLine();
-				minPrice = given_Str;
-			}
-			else if(option_number == 4)
-			{
-				System.out.println("Maximum price:");
-				given_Str = myScanner.nextLine();
-				maxPrice = given_Str;
-			}
-			else if(option_number == 5)
-			{
-				browse();
-			}
+			System.out.println("Category:");
+			given_Str = myScanner.next();
+			category = given_Str;
+			
+			System.out.println("Localisation:");
+			given_Str = myScanner.nextLine();
+			localisation = given_Str;
+			
+			System.out.println("Minimum price:");
+			given_Str = myScanner.nextLine();
+			minPrice = given_Str;
+			
+			System.out.println("Maximum price:");
+			given_Str = myScanner.nextLine();
+			maxPrice = given_Str;
+			
+			
 		}
 		catch(NumberFormatException myException)
 		{
@@ -238,47 +226,6 @@ public class View
 		{
 			System.out.println("L'argument de doit etre un identifiant (nombre entier)");
 		}
-		
-		String[] arrayToSearch = {category, localisation, minPrice, maxPrice};
-		
-		Database myDB = new Database();
-		Connection myConnection = myDB.connect();
-		
-		try
-		{
-			String sqlCommand = "SELECT  FROM advertisment";
-			
-			for(int commandLoop = 0; commandLoop < arrayToSearch.length; commandLoop++)
-			{
-				if(arrayToSearch[commandLoop] != null)
-				{
-					switch(commandLoop)
-					{
-						case 0:
-							sqlCommand += " WHERE category=?";
-						case 1:
-							
-					}
-				}
-			}
-			
-			Statement myStatement = myConnection.createStatement();
-			ResultSet rs  = myStatement.executeQuery(sqlCommand);
-			
-			if(rs.next())
-			{
-				
-			}
-			
-			myStatement.close();
-			myDB.disconnect();
-		}
-		catch (SQLException e) 
-		{
-			System.out.println(e.getMessage());
-			myDB.disconnect();
-		}
-		
 	}
 	
 	

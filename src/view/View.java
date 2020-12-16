@@ -85,6 +85,7 @@ public class View
 	public void browse()
 	{
 		String[] categoryArray = null;
+		int numberToDisplay = 0;
 		
 		Database myDB = new Database();
 		Connection myConnection = myDB.connect();
@@ -117,8 +118,6 @@ public class View
 		System.out.println("1 - Search with parameters");
 		System.out.println("2 - Return");
 		
-		int numberToDisplay = 0;
-		
 		for(int categoryLoop = 0; categoryLoop < categoryArray.length; categoryLoop++)
 		{
 			numberToDisplay = categoryLoop + 3;
@@ -141,11 +140,9 @@ public class View
 				else
 					mainMenu();
 			}
-			else if(option_number > 2)
+			else if(option_number > 2 && option_number < categoryArray.length+2)
 			{
-				//check si la valeur entrée est supérieure à 2 
-				//et inférieure au nb de catégories
-				//ensuite on appelle la méthode display qui display les advertisments par catégories
+				displayCategory(categoryArray[option_number-3]);
 			}
 		}
 		catch(NumberFormatException myException)
@@ -285,6 +282,12 @@ public class View
 	}
 	
 	
+	//fonction qui affiche les categories
+	public void displayCategory(String category_name)
+	{
+		
+	}
+	
 	//fonction creation d'une annonce
 	/*public void createAdvertisment()
 	{
@@ -297,11 +300,7 @@ public class View
 		
 	}
 	
-	//fonction qui affiche les categories
-	public void displayCategories()
-	{
-		
-	}
+	
 	
 	//fonction qui affiche les annonces
 	public void displayAdvertisments()

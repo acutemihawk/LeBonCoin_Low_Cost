@@ -1,5 +1,4 @@
 package controller;
-
 import java.sql.*;
 import model.*;
 import java.util.ArrayList;
@@ -189,8 +188,8 @@ public class UserDAO
 		}
 		catch (SQLException e) 
 		{
-			System.out.println(e.getMessage());
 			myBdd.disconnect();
+			System.out.println(e.getMessage());
 			return false;
 		}
 	}
@@ -228,8 +227,8 @@ public class UserDAO
 		}
 		catch (SQLException e) 
 		{
-			System.out.println(e.getMessage());
 			myBdd.disconnect();
+			System.out.println(e.getMessage());
 			return false;
 		}
 	}

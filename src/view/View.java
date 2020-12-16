@@ -1,32 +1,37 @@
 package view;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
 import controller.*;
-import model.*;
+import model.Advertisment;
 
 public class View
 {
-	private MainController mainController = new MainController();
-	private Scanner myScanner = new Scanner(System.in);
-	private String given_Str = "";
-	private int option_number = 0;
+	private MainController mainController;
+	private Scanner myScanner ;
+	private String given_Str;
+	private int option_number;
+	
+	public View()
+	{
+		mainController = new MainController();
+		myScanner = new Scanner(System.in);
+		given_Str = "";
+		option_number = 0;
+		
+	}
 	
 	//fonction du démarrage de l'application
 	public void mainMenu()
 	{
-		System.out.println("--------------------------------------------------");
+		System.out.println("----------------------------------------------------------------------");
 		System.out.println("Choose one option from below and press Enter to navigate :");
 		System.out.println("1 - Sign in");
 		System.out.println("2 - Continue without signing in");
 		System.out.println("3 - Create account");
-		System.out.println("--------------------------------------------------");
+		System.out.println("----------------------------------------------------------------------");
 		
 		try
 		{
@@ -35,11 +40,11 @@ public class View
 			if(option_number == 1)
 			{
 				System.out.println("username:");
-				given_Str = myScanner.nextLine();
+				given_Str = myScanner.next();
 				String username = given_Str;
 				
 				System.out.println("password:");
-				given_Str = myScanner.nextLine();
+				given_Str = myScanner.next();
 				String password = given_Str;
 				
 				if(mainController.userConnect(username, password))
@@ -67,11 +72,11 @@ public class View
 		}
 		catch(NumberFormatException myException)
 		{
-			System.out.println("L'argument de la commande Push doit etre entier !");
+			System.out.println("Please enter a number !");
 		}
 		catch(InputMismatchException myException) //à voir si on doit le garder
 		{
-			System.out.println("L'argument de doit etre un identifiant (nombre entier)");
+			System.out.println("The argument you entered is invalid");
 		}
 	}
 	
@@ -84,46 +89,22 @@ public class View
 	//fonction parcourir
 	public void browse()
 	{
-		String[] categoriesArray = null;
+		ArrayList<String> categoriesArray = new ArrayList<String>();
 		int numberToDisplay = 0;
-		int categoryLoop = 1;
 		
-		Database myDB = new Database();
-		Connection myConnection = myDB.connect();
+		categoriesArray = mainController.getMyAdvDAO().getCategory();
 		
-		try
-		{
-			String sqlCommand = "SELECT DISTINCT category FROM advertisment";
-			Statement myStatement = myConnection.createStatement();
-			ResultSet rs  = myStatement.executeQuery(sqlCommand);
-			
-			while(rs.next())
-			{
-				categoriesArray[categoryLoop-1] = rs.getString(1);
-				categoryLoop++;
-			}		
-					
-			
-			myStatement.close();
-			myDB.disconnect();
-		}
-		catch (SQLException e) 
-		{
-			System.out.println(e.getMessage());
-			myDB.disconnect();
-		}
-		
-		System.out.println("--------------------------------------------------");
+		System.out.println("----------------------------------------------------------------------");
 		System.out.println("Choose one option from below and press Enter to navigate :");
 		System.out.println("1 - Search with parameters");
 		System.out.println("2 - Return");
 		
-		for(int categoryLoop = 0; categoryLoop < categoriesArray.length; categoryLoop++)
+		for ( int categoryLoop=0 ; categoryLoop < categoriesArray.size(); categoryLoop++)
 		{
 			numberToDisplay = categoryLoop + 3;
-			System.out.println(numberToDisplay + " - " + categoriesArray[categoryLoop]);
+			System.out.println(numberToDisplay + " - " + categoriesArray.get(categoryLoop));
 		}
-		System.out.println("--------------------------------------------------");
+		System.out.println("----------------------------------------------------------------------");	
 		
 		try
 		{
@@ -140,18 +121,18 @@ public class View
 				else
 					mainMenu();
 			}
-			else if(option_number > 2 && option_number < categoriesArray.length+2)
+			else if(option_number > 2 && option_number < categoriesArray.size()+2)
 			{
-				displayCategory(categoriesArray[option_number-3]);
-			}
+				//displayCategory(categoriesArray[option_number-3]);****************************
+			} 
 		}
 		catch(NumberFormatException myException)
 		{
-			System.out.println("L'argument de la commande Push doit etre entier !");
+			System.out.println("Please enter a number !");
 		}
-		catch(InputMismatchException myException) //à voir si on doit le garder
+		catch(InputMismatchException myException)
 		{
-			System.out.println("L'argument de doit etre un identifiant (nombre entier)");
+			System.out.println("The argument you entered is invalid");
 		}
 	}
 	
@@ -163,15 +144,15 @@ public class View
 		String mail;
 		
 		System.out.println("username:");
-		given_Str = myScanner.nextLine();
+		given_Str = myScanner.next();
 		username = given_Str;
 		
 		System.out.println("password:");
-		given_Str = myScanner.nextLine();
+		given_Str = myScanner.next();
 		password = given_Str;
 
 		System.out.println("email address:");
-		given_Str = myScanner.nextLine();
+		given_Str = myScanner.next();
 		mail = given_Str;
 		
 		mainController.createAccount(username, password, mail);
@@ -190,49 +171,85 @@ public class View
 	
 	//fonction search avec paramètres
 	public void search()
-	{
-		String category = null;
-		String localisation = null;
-		String minPrice = null;
-		String maxPrice = null;
-		
-		try
-		{
-			System.out.println("Please, enter some informations:");
-			
-			System.out.println("Category:");
-			given_Str = myScanner.next();
-			category = given_Str;
-			
-			System.out.println("Localisation:");
-			given_Str = myScanner.nextLine();
-			localisation = given_Str;
-			
-			System.out.println("Minimum price:");
-			given_Str = myScanner.nextLine();
-			minPrice = given_Str;
-			
-			System.out.println("Maximum price:");
-			given_Str = myScanner.nextLine();
-			maxPrice = given_Str;
-			
-			
-		}
+    {
+		int numberToDisplay = 3;
+        String category = "";
+        String localisation = "";
+        float minPrice = 0;
+        float maxPrice = 0;
+        
+        ArrayList<Advertisment> advertismentList = new ArrayList<Advertisment>();
+        
+        try
+        {
+            System.out.println("Please, enter some information:");
+            
+            System.out.println("Category:");
+            category = myScanner.next();
+            
+            System.out.println("Localisation:");
+            localisation = myScanner.next();
+            
+            System.out.println("Minimum price:");
+            minPrice = myScanner.nextFloat();
+
+            System.out.println("Maximum price:");
+            maxPrice = myScanner.nextFloat();
+            
+            advertismentList = mainController.getMyAdvDAO().search(category, minPrice, maxPrice, localisation);
+            
+            System.out.println("----------------------------------------------------------------------");
+    		System.out.println("Choose one option from below and press Enter to navigate :");
+    		System.out.println("1 - Make an offer");
+    		System.out.println("2 - Return");
+    		
+            for( Advertisment advTmp : advertismentList)
+            {
+            	System.out.println(numberToDisplay+" - "+advTmp.getTitre()+" "+advTmp.getPrice()+" ("+advTmp.getIdAdvertisment()+") ");
+            	numberToDisplay++;
+            }
+            System.out.println("----------------------------------------------------------------------");
+            
+            option_number = myScanner.nextInt();
+
+			if(option_number == 1)
+			{
+				
+				if(mainController.getMyUser().isConnected())
+				{
+					makeOffer();
+				}
+				else
+				{
+					System.out.println("Error: You need to be connected to make an offer.");
+					mainMenu();
+				}
+			}
+			else if(option_number == 2)
+			{
+				browse();
+			}
+			else if(option_number > 2 && option_number < advertismentList.size()+2)
+			{
+				displayAdvertisment(advertismentList.get(option_number-3));
+			} 
+            
+        }
 		catch(NumberFormatException myException)
 		{
-			System.out.println("L'argument de la commande Push doit etre entier !");
+			System.out.println("Please enter a number !");
 		}
-		catch(InputMismatchException myException) //à voir si on doit le garder
+		catch(InputMismatchException myException)
 		{
-			System.out.println("L'argument de doit etre un identifiant (nombre entier)");
+			System.out.println("The argument you entered is invalid");
 		}
-	}
+    }
 	
 	
 	//fonction qui affiche les categories
 	public void displayCategory(String category_name)
 	{
-		String[][] advertismentsArray = null;
+		/*String[][] advertismentsArray = null;
 		int numberToDisplay = 0;
 		int advertismentLoop = 1;
 		
@@ -280,7 +297,7 @@ public class View
 			
 			if(option_number == 1)
 			{
-				search();
+				makeOffer();
 			}
 			else if(option_number == 2)
 			{
@@ -301,7 +318,29 @@ public class View
 		catch(InputMismatchException myException) //à voir si on doit le garder
 		{
 			System.out.println("L'argument de doit etre un identifiant (nombre entier)");
-		}
+		}*/
+		
+	}
+	
+	//fonction qui affiche une annonce
+	public void displayAdvertisment(Advertisment ad)
+	{
+		System.out.println("----------------------------------------------------------------------");
+		System.out.println("Id : " + ad.getIdAdvertisment());
+		System.out.println("Title : " + ad.getTitre());
+		System.out.println("Price : " + ad.getPrice() + "€");
+		System.out.println("Category: " + ad.getCategory());
+		System.out.println("Description " + ad.getDescription());
+        System.out.println("----------------------------------------------------------------------");
+        
+        
+        //**************** ajouter scanner pour return
+        
+	}
+	
+	//fonction creation d'une offre
+	public void makeOffer()
+	{
 		
 	}
 	
@@ -309,21 +348,13 @@ public class View
 	/*public void createAdvertisment()
 	{
 		
-	}
-	
-	//fonction creation d'une offre
-	public void createOffer()
-	{
-		
-	}
-	
-	
-	
-	//fonction qui affiche les annonces
-	public void displayAdvertisments()
-	{
-		
 	}*/
+	
+	
+	
+	
+	
+	
 	
 	
 	

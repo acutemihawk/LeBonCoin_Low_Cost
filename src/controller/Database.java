@@ -1,5 +1,4 @@
 package controller;
-
 import java.sql.*;
 
 public class Database 
@@ -52,7 +51,8 @@ public class Database
 	{
 		if(myCon == null)
 		{
-			System.out.println("Error, could not reach to database");		
+			System.out.println("Error, could not reach to database");	
+			System.exit(-1);
 		}
 		try
 		{	

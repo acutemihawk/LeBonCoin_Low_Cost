@@ -7,16 +7,16 @@ public class Advertisment
 	private	long idAdvertisment;
 	private long idOwner;
 	private float price;
-	private String type;
+	private String titre;
 	private String category;
 	private String localisation;
 	private String description;
 	private ArrayList<Offer> listMyOffer;
 	
-	public Advertisment(long idOwn, String Ad_type, String Ad_category, String Ad_localisation, float Ad_price, String Ad_desc)
+	public Advertisment(long idOwn, String Ad_titre, String Ad_category, String Ad_localisation, float Ad_price, String Ad_desc)
 	{
 		idOwner = idOwn;
-		type = Ad_type;
+		titre = Ad_titre;
 		category = Ad_category;
 		localisation = Ad_localisation;
 		price = Ad_price;
@@ -49,14 +49,14 @@ public class Advertisment
 		this.idOwner = idOwner;
 	}
 	
-	public String getType()
+	public String getTitre()
 	{
-		return type;
+		return titre;
 	}
 	
-	public void setType(String type)
+	public void setTitre(String titre)
 	{
-		this.type = type;
+		this.titre = titre;
 	}
 	
 	public String getCategory()

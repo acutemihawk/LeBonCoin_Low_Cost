@@ -297,4 +297,5 @@ public class OfferDAO
 			return 0;
 		}
 	}
+	
 }

@@ -70,12 +70,12 @@ public class MainController
 	}
 	
 	/* Ajoute une annonce sur le site */
-	public boolean addUserAdvertisment(String type, String localisation, float price, String description,String category)
+	public boolean addUserAdvertisment(String titre, String localisation, float price, String description,String category)
 	{
 		if (testConnection() == false)
 			return false;
 		
-		myAdv.setType(type);
+		myAdv.setTitre(titre);
 		myAdv.setCategory(category);
 		myAdv.setDescription(description);
 		myAdv.setIdOwner(myUser.getIdUser());
@@ -205,12 +205,6 @@ public class MainController
 		return myOfDAO.deleteOf(offerToDel);
 	}
 	
-	/*public boolean search(String localisation, float minPrice, float MaxPrice,String category)
-	{
-		
-		
-	}
-	*/
 	
 	public User getMyUser() 
 	{

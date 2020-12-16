@@ -84,25 +84,25 @@ public class View
 	//fonction parcourir
 	public void browse()
 	{
-		String[] categoryArray = null;
+		String[] categoriesArray = null;
 		int numberToDisplay = 0;
+		int categoryLoop = 1;
 		
 		Database myDB = new Database();
 		Connection myConnection = myDB.connect();
 		
 		try
 		{
-			String sqlCommand = "SELECT DISTINCT catégorie FROM advertisment";
+			String sqlCommand = "SELECT DISTINCT category FROM advertisment";
 			Statement myStatement = myConnection.createStatement();
 			ResultSet rs  = myStatement.executeQuery(sqlCommand);
 			
-			if(rs.next())
+			while(rs.next())
 			{
-				for(int categoryLoop = 1; categoryLoop < rs.getFetchSize(); categoryLoop++)
-				{
-					categoryArray[categoryLoop-1] = rs.getString(categoryLoop);
-				}
-			}
+				categoriesArray[categoryLoop-1] = rs.getString(1);
+				categoryLoop++;
+			}		
+					
 			
 			myStatement.close();
 			myDB.disconnect();
@@ -118,10 +118,10 @@ public class View
 		System.out.println("1 - Search with parameters");
 		System.out.println("2 - Return");
 		
-		for(int categoryLoop = 0; categoryLoop < categoryArray.length; categoryLoop++)
+		for(int categoryLoop = 0; categoryLoop < categoriesArray.length; categoryLoop++)
 		{
 			numberToDisplay = categoryLoop + 3;
-			System.out.println(numberToDisplay + " - " + categoryArray[categoryLoop]);
+			System.out.println(numberToDisplay + " - " + categoriesArray[categoryLoop]);
 		}
 		System.out.println("--------------------------------------------------");
 		
@@ -140,9 +140,9 @@ public class View
 				else
 					mainMenu();
 			}
-			else if(option_number > 2 && option_number < categoryArray.length+2)
+			else if(option_number > 2 && option_number < categoriesArray.length+2)
 			{
-				displayCategory(categoryArray[option_number-3]);
+				displayCategory(categoriesArray[option_number-3]);
 			}
 		}
 		catch(NumberFormatException myException)
@@ -285,6 +285,76 @@ public class View
 	//fonction qui affiche les categories
 	public void displayCategory(String category_name)
 	{
+		String[][] advertismentsArray = null;
+		int numberToDisplay = 0;
+		int advertismentLoop = 1;
+		
+		Database myDB = new Database();
+		Connection myConnection = myDB.connect();
+		
+		try
+		{
+			String sqlCommand = "SELECT idAdvertisment, localisation, price, title FROM advertisment WHERE category=?";
+			PreparedStatement myStatement = myConnection.prepareStatement(sqlCommand);
+			myStatement.setString(1, category_name);
+			ResultSet rs  = myStatement.executeQuery();
+			
+			while(rs.next())
+			{
+				advertismentsArray[advertismentLoop-1] = rs.getString(1);
+				
+			}
+			
+			myStatement.close();
+			myDB.disconnect();
+		}
+		catch (SQLException e)
+		{
+			System.out.println(e.getMessage());
+			myDB.disconnect();
+		}
+		
+		System.out.println("--------------------------------------------------");
+		System.out.println("Choose one option from below and press Enter to navigate :");
+		System.out.println("1 - Make an offer");
+		System.out.println("2 - Return");
+		
+		for(int advertismentLoop = 0; advertismentLoop < advertismentsArray.length; advertismentLoop++)
+		{
+			numberToDisplay = advertismentLoop + 3;
+			System.out.println(numberToDisplay + " - " + advertismentsArray[advertismentLoop]);
+		}
+		System.out.println("--------------------------------------------------");
+		
+		
+		try
+		{
+			option_number = myScanner.nextInt();
+			
+			if(option_number == 1)
+			{
+				search();
+			}
+			else if(option_number == 2)
+			{
+				if(mainController.getMyUser().isConnected())
+					connectedUser();
+				else
+					mainMenu();
+			}
+			else if(option_number > 2 && option_number < categoriesArray.length+2)
+			{
+				displayCategory(categoriesArray[option_number-3]);
+			}
+		}
+		catch(NumberFormatException myException)
+		{
+			System.out.println("L'argument de la commande Push doit etre entier !");
+		}
+		catch(InputMismatchException myException) //à voir si on doit le garder
+		{
+			System.out.println("L'argument de doit etre un identifiant (nombre entier)");
+		}
 		
 	}
 	

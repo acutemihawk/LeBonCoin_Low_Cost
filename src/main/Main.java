@@ -1,5 +1,6 @@
 package main;
 
+import controller.MainController;
 import view.*;
 
 public class Main 
@@ -8,11 +9,14 @@ public class Main
 	public static void main(String[] args) 
 	{
 
-		/*MainController MainC1 = new MainController();
-		MainC1.userConnect("maoufal", "azerty");
-		MainC1.getMyAdvDAO().search("andr", 0, 1000, "pa");*/
-		View myView = new View();
-		myView.mainMenu();
+		MainController MainC1 = new MainController();
+	
+		MainC1.userConnect("batpiste", "azerty");
+		MainC1.getUserOffer();
+		//MainC1.getPropositionInformation();
+		//MainC1.addUserOffer(3, 350);
+		//View myView = new View();
+		//myView.displayUserPropositions();
 		//MainC1.addUserAdvertisment("SMARTPHONE PAS CHER", "paris",680, "Telephone neuf, récent","iphone");
 		//MainC1.acceptOffer(17);
 		

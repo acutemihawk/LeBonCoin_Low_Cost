@@ -5,7 +5,7 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 
 import controller.*;
-import model.Advertisment;
+import model.*;
 
 public class View
 {
@@ -218,10 +218,108 @@ public class View
 		}
 		catch(InputMismatchException myException) //à voir si on doit le garder
 		{
-			System.out.println("The argument you entered is invalid");
+			System.out.println(myException.getMessage());
 		}
     }
 	
+	
+	public void createAdvertisment()
+	{
+		try
+		{
+	        String localisation = "";
+	        float price = 0;
+	        String description="";
+	        String category ="";
+	        String titre ="";
+	        
+	        System.out.println("Please, enter some information:");
+	        
+	        System.out.println("Category : ");
+	        category = myScanner.next();
+	        // Consuming the leftover new line 
+	        myScanner.nextLine();
+	        
+	        System.out.println("Localisation : ");
+	        localisation = myScanner.next();
+	        // Consuming the leftover new line 
+	        myScanner.nextLine();
+	        
+	        System.out.println("Title : ");
+	        titre = myScanner.nextLine();
+	
+	        System.out.println("Description : ");
+	        description = myScanner.nextLine();
+	        
+	        System.out.println("Price :");
+	        price = myScanner.nextFloat();
+	        // Consuming the leftover new line 
+	        myScanner.nextLine();
+	        
+	        mainController.addUserAdvertisment(titre, localisation, price, description, category);
+	        connectedUser();
+
+		}
+		catch(NumberFormatException myException)
+		{
+			System.out.println("Please enter a number !");
+		}
+		catch(InputMismatchException myException) //à voir si on doit le garder
+		{
+			System.out.println(myException.getMessage());
+		}
+	}
+	
+	public void displayUserPropositions()
+	{
+		int numberToDisplay = 3;
+		
+		System.out.println("----------------------------------------------------------------------");
+		System.out.println("Choose one option from below and press Enter to navigate");
+		System.out.println("These are your currents propositions :");
+		System.out.println("1 - Cancel a proposition");
+		System.out.println("2 - Return");
+		
+		try
+		{
+	        ArrayList<Offer> myArrayList = new ArrayList<Offer>();
+	        myArrayList = mainController.getUserPropositions();
+	        
+	        for ( Offer propositionTmp : myArrayList )
+	        {
+	        	System.out.println(numberToDisplay+" - You made a proposition for the advertisment : "+propositionTmp.getIdAdvertisment()+" at the price of : "+propositionTmp.getNewPrice()+"$ ("+propositionTmp.getIdOffer()+") ");
+	        	numberToDisplay++;
+	        }
+	        System.out.println("----------------------------------------------------------------------");
+		}
+		catch( NullPointerException myException)
+		{
+			System.out.println("You need to register to use this functionnality");
+		}
+		
+		try
+		{
+			option_number = myScanner.nextInt();
+			
+			if(option_number == 1)
+			{
+				System.out.println("Please enter the number on the right of the proposition you wish to delete ");
+				long idOffer = myScanner.nextInt();
+				if(mainController.delUserOffer(idOffer) == true);
+					System.out.println("Your proposition was successfully deleted ");
+			}
+			else
+			{
+				connectedUser();
+				// call return function @Naoufal
+			}
+		}
+		catch(InputMismatchException myException) //à voir si on doit le garder
+		{
+			System.out.println("The argument you entered is invalid");
+		}
+
+	}
 	
 	//fonction qui affiche les categories
 /*	public void displayCategory(String category_name)
@@ -297,10 +395,10 @@ public class View
 			System.out.println("L'argument de doit etre un identifiant (nombre entier)");
 		}
 		
-	}*/
+	}
 	
 	//fonction creation d'une annonce
-	/*public void createAdvertisment()
+	public void createAdvertisment()
 	{
 		
 	}
@@ -309,15 +407,11 @@ public class View
 	public void displayUserProposition()
 	{
 		
-	}
-	
-	
-	
-	//fonction qui affiche les annonces
-	public void displayAdvertisments()
-	{
-		
 	}*/
+	
+	
+	
+
 	
 	
 	

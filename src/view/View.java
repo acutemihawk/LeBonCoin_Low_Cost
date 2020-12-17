@@ -31,6 +31,7 @@ public class View
 		System.out.println("1 - Sign in");
 		System.out.println("2 - Continue without signing in");
 		System.out.println("3 - Create account");
+		System.out.println("4 - Exit");
 		System.out.println("----------------------------------------------------------------------");
 		
 		try
@@ -68,6 +69,10 @@ public class View
 			else if(option_number == 3)
 			{
 				createAccount();
+			}
+			else if(option_number == 4)
+			{
+				System.exit(0);
 			}
 			else
 			{
@@ -115,7 +120,7 @@ public class View
 			}
 			else if(option_number == 4)
 			{
-				//************************************ consult my offers
+				displayUserReceivedOffer();
 			}
 			else if(option_number == 5)
 			{
@@ -414,7 +419,7 @@ public class View
 	        String category ="";
 	        String titre ="";
 	        
-	        System.out.println("Please, enter some  about the advertisment:");
+	        System.out.println("Please, enter some information about the advertisment:");
 	        
 	        System.out.println("Category : ");
 	        category = myScanner.next();
@@ -486,7 +491,7 @@ public class View
 			{
 				System.out.println("Please enter the id (number on the right) of the proposition you want to delete :");
 				long idOffer = myScanner.nextInt();
-				if(mainController.delUserOffer(idOffer) == true)
+				if(mainController.delUserProposition(idOffer) == true)
 					System.out.println("Your proposition was successfully deleted ");
 			}
 			else if(option_number == 2)
@@ -506,18 +511,83 @@ public class View
 		}
 	}
 	
+	public void displayUserReceivedOffer()
+	{
+		try
+		{
+			int numberToDisplay = 4;
+			
+			System.out.println("----------------------------------------------------------------------");
+			System.out.println("Choose one option from below and press Enter to navigate");
+			System.out.println("These are your currents offer :");
+			System.out.println("1 - Accept an offer");
+			System.out.println("2 - Refuse an offer");
+			System.out.println("3 - Return");
+
+	        ArrayList<Offer> myArrayList = new ArrayList<Offer>();
+	        mainController.userConnect("batpiste", "azerty");
+	        myArrayList = mainController.getUserReceivedOffer();
+	        
+	        for (Offer receivedOffer : myArrayList)
+	        {
+	        	User buyer = new User();
+	        	buyer.setIdUser(receivedOffer.getIdBuyer());
+	        	System.out.println(numberToDisplay+" - You received an offer from : "+mainController.getMyUserDAO().getUserName(buyer)+" on the advertisment : "+receivedOffer.getIdAdvertisment()+" at the price of : "+receivedOffer.getNewPrice()+"$"
+	        			+ " ("+receivedOffer.getIdOffer()+") ");
+	        	numberToDisplay++;
+	        }
+	        
+	        System.out.println("----------------------------------------------------------------------");
+
+			option_number = myScanner.nextInt();
+			
+			if(option_number == 1)
+			{
+				System.out.println("Please enter the number in parentheses on the right of the offer you wish to accept ");
+				long idOffer = myScanner.nextInt();
+				if(mainController.acceptOffer(idOffer) == true)		
+				{
+					System.out.println("The offer was successfully accepted, as a consequence your annonce has been removed from the application as well as any current offer on it  ");
+				}
+				else
+				{
+					displayUserReceivedOffer();
+				}
+			}
+			else if(option_number == 2)
+			{
+				System.out.println("Please enter the number in parentheses on the right of the offer you wish to refuse ");
+				long idOffer = myScanner.nextInt();
+				if(mainController.refuseOffer(idOffer) == true)
+				{
+					System.out.println("The offer was successfully refused");
+				}	
+				else
+				{
+					displayUserReceivedOffer();
+				}
+			}
+			else
+			{
+				connectedUser();
+			}
+		}
+		catch(InputMismatchException myException)
+		{
+			System.out.println("The argument you entered is invalid");
+			
+		}
+		catch(Exception myException)
+		{
+			myException.getMessage();
+		}
+	}
 	
 	//fonction creation d'une offre
 	public void makeOffer()
 	{
 		
 	}
-	
-	//fonction creation d'une annonce
-	/*public void createAdvertisment()
-	{
-		
-	}*/
 	
 	
 	

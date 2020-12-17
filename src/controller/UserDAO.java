@@ -33,12 +33,41 @@ public class UserDAO
 		catch (SQLException e) 
 		{
 			System.out.println(e.getMessage());
-			System.exit(-1);
 			myBdd.disconnect();
 			return -1;
 		}
 		
 	}
+	
+	public String getUserName(User myUser)
+    {
+        Database myBdd = new Database();
+        Connection myConnection = myBdd.connect();
+        String name = "";
+        
+        try
+        {
+            String SQL = " SELECT username FROM USER WHERE iduser = ?";
+            
+            PreparedStatement myStatement = myConnection.prepareStatement(SQL);
+            myStatement.setLong(1, myUser.getIdUser());
+            ResultSet rs  = myStatement.executeQuery();
+            
+            if(rs.next() != false)
+            {
+                name = rs.getString(1);
+            }
+            myStatement.close();
+            myBdd.disconnect();
+            return name;
+        }
+        catch (SQLException e) 
+        {
+            System.out.println(e.getMessage());
+            myBdd.disconnect();
+            return name;
+        }    
+    }
 	
 	/* renvoie la liste d'advertisment de l'utilisateur passé en parametre*/
 	public ArrayList<Integer> getUserListAdv(User myUser)

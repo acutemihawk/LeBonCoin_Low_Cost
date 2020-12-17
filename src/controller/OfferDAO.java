@@ -181,12 +181,12 @@ public class OfferDAO
 		{
 			String sqlCommand = "SELECT idoffer FROM offer WHERE idAdvertisment= ?";
 			PreparedStatement myStatement = myConnection.prepareStatement(sqlCommand,ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
-			myStatement.setLong(1, Of.getIdOffer());
+			myStatement.setLong(1, Of.getIdAdvertisment());
 			ResultSet rs = myStatement.executeQuery();
 			
 			ArrayList<Integer> arrayTmpDel= new ArrayList<Integer>();
 			
-			while(rs.next() != false)
+			while(rs.next())
 			{
 				arrayTmpDel.add((int) rs.getLong(1));
 			}

@@ -112,7 +112,7 @@ public class MainController
 	}
 	
 	/* fait une proposition avec newPrice sur l'annonce ayant idAdv pour id */
-	public boolean addUserOffer(long idAdv,float newPrice)
+	public boolean addUserProposition(long idAdv,float newPrice)
 	{
 		if (testConnection() == false)
 			return false;
@@ -147,9 +147,8 @@ public class MainController
 
 	/* Supprime une proposition faite sur une annonce avec l'id de la proposition en parametre */
 	@SuppressWarnings("unlikely-arg-type")
-	public boolean delUserOffer(long idOffer)
+	public boolean delUserProposition(long idOffer)
 	{
-		System.out.println(testConnection());
 		if (testConnection() == false)
 			return false;
 
@@ -165,7 +164,7 @@ public class MainController
 			return false;
 	}
 	
-	// Accepte la proposition avec pour id = idOffer -> supprime toutes les autres propositions sur l'offre et retire l'annonce de l'application
+	// Accepte l'offre avec pour id = idOffer -> supprime toutes les autres propositions sur l'offre et retire l'annonce de l'application
 	public boolean acceptOffer(long idOffer)
 	{
 		if (testConnection() == false)
@@ -173,22 +172,20 @@ public class MainController
 		
 		myOffer.setIdOffer(idOffer);
 		
-		if (myOfDAO.getAdvID(myOffer) == 0)
+		for (Integer loop : myUser.getListAdvertisment() )
 		{
-			System.out.println("Please accept an offer that is addressed to you ");
-			return false;
+			if(loop == (myOfDAO.getAdvID(myOffer)))
+			{
+				Advertisment advToDel = new Advertisment();
+				advToDel.setIdAdvertisment(myOfDAO.getAdvID(myOffer));
+				myOffer.setIdAdvertisment(myOfDAO.getAdvID(myOffer));
+				return myOfDAO.deleteAllOffer(myOffer) && myAdvDAO.deleteAd(advToDel);
+			}
 		}
+		System.out.println("Please accept an offer that is addressed to you ");
+		return false;
 		
-		Advertisment advToDel = new Advertisment();
-		advToDel.setIdAdvertisment(myOfDAO.getAdvID(myOffer));
-		
-		myOffer.setIdOffer(myOfDAO.getAdvID(myOffer));
-		
-		return myOfDAO.deleteAllOffer(myOffer) && myAdvDAO.deleteAd(advToDel);
-			// mettre dans view System.out.println("Offer number "+idOffer+" successfully accepted, Advertisment "+advToDel.getIdAdvertisment()+" will be removed");
-
-
-	}
+}
 	
 	// Supprime l'offre associé a l'annonce ayant pour id idOffer 
 	public boolean refuseOffer(long idOffer)
@@ -200,12 +197,16 @@ public class MainController
 		offerToDel.setIdOffer(idOffer);
 		offerToDel.setIdBuyer(myOfDAO.getUserID(offerToDel));
 
-		if(myUser.getIdUser() != offerToDel.getIdBuyer())
+		for (Integer loop : myUser.getListAdvertisment() )
 		{
-			System.out.println("The proposition you wish to refuse isn't yours, please choose one of your proposition ");
-			return false;
+			if(loop == (myOfDAO.getAdvID(offerToDel)))
+			{
+				return myOfDAO.deleteOf(offerToDel);
+			}
 		}
-		return myOfDAO.deleteOf(offerToDel);
+		
+		System.out.println("Please accept an offer that is addressed to you ");
+		return false;
 	}
 	
 	/* returns an arrayList of offer that represents all of the proposition made by the user to different advertisment */
@@ -228,7 +229,7 @@ public class MainController
 	}
 	
 	/* renvoie une listes des offre recues par l'uitlisateurs */
-	public ArrayList<Offer> getUserOffer()
+	public ArrayList<Offer> getUserReceivedOffer()
 	{
 		if (testConnection() == false)
 			return null;
@@ -244,9 +245,7 @@ public class MainController
 			myOf.setIdBuyer(myOfDAO.getUserID(myOf));
 			myArrayToReturn.add(myOf);
 		}
-		
 		return myArrayToReturn;
-		
 	}
 	
 	public User getMyUser() 

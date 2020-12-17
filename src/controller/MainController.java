@@ -79,13 +79,19 @@ public class MainController
 		if (testConnection() == false)
 			return false;
 		
+		if(price <0)
+        {
+            System.out.println("Please put a price above 0...");
+            return false;
+        }
+		
 		myAdv.setTitre(titre);
 		myAdv.setCategory(category);
 		myAdv.setDescription(description);
 		myAdv.setIdOwner(myUser.getIdUser());
 		myAdv.setPrice(price);
 		myAdv.setLocalisation(localisation);
-	
+		
 		if (myAdvDAO.insertAd(myAdv) == true)
 		{
 			myAdv.setIdAdvertisment(myAdvDAO.getLastID()); 
@@ -152,25 +158,28 @@ public class MainController
 	}
 
 	/* Supprime une proposition faite sur une annonce avec l'id de la proposition en parametre */
-	@SuppressWarnings("unlikely-arg-type")
 	public boolean delUserProposition(long idOffer)
-	{
-		if (testConnection() == false)
-			return false;
+    {
+        if (testConnection() == false)
+            return false;
 
-		Offer offerToDel = new Offer();
-		offerToDel.setIdOffer(idOffer);
-		if(myOfDAO.deleteOf(offerToDel) == true)
-		{
-			if (myUser.getListOffer().remove(offerToDel.getIdOffer()) == true)
-				return true;
-			else
-				return false;
-		}
-			
-		else
-			return false;
-	}
+        Offer offerToDel = new Offer();
+        offerToDel.setIdOffer(idOffer);
+        if(myOfDAO.deleteOf(offerToDel) == true)
+        {
+            for (Integer loop : myUser.getListOffer())
+            {
+                if (loop ==offerToDel.getIdOffer())
+                {    
+                    myUser.getListOffer().remove(loop);
+                    return true;
+                }
+                else
+                    return false;
+            }
+        }
+        return false;
+    }
 	
 	// Accepte l'offre avec pour id = idOffer -> supprime toutes les autres propositions sur l'offre et retire l'annonce de l'application
 	public boolean acceptOffer(long idOffer)

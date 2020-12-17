@@ -64,40 +64,6 @@ public class AdvertismentDAO
 		}
 	}
 	
-	/*public boolean updateAd(Advertisment ad)
-	{
-		Database myDB = new Database();
-		Connection myConnection = myDB.connect();
-		
-		try
-		{
-			String sqlCommand;
-			Statement myStatement = myConnection.createStatement();
-			
-			sqlCommand = "UPDATE advertisment SET type='" + ad.getType() + "' WHERE idAdvertisment='" + ad.getIdAdvertisment() + "';";
-			myStatement.executeUpdate(sqlCommand);
-			sqlCommand = "UPDATE advertisment SET localisation='" + ad.getLocalisation() + "' WHERE idAdvertisment='" + ad.getIdAdvertisment() + "';";
-			myStatement.executeUpdate(sqlCommand);
-			sqlCommand = "UPDATE advertisment SET price='" + ad.getPrice() + "' WHERE idAdvertisment='" + ad.getIdAdvertisment() + "';";
-			myStatement.executeUpdate(sqlCommand);
-			sqlCommand = "UPDATE advertisment SET description='" + ad.getDescription() + "' WHERE idAdvertisment='" + ad.getIdAdvertisment() + "';";
-			myStatement.executeUpdate(sqlCommand);
-			sqlCommand = "UPDATE advertisment SET category='" + ad.getCategory() + "' WHERE idAdvertisment='" + ad.getIdAdvertisment() + "';";
-			myStatement.executeUpdate(sqlCommand);
-			
-			myStatement.close();
-			myDB.disconnect();
-			
-			return true;
-		}
-		catch (SQLException e)
-		{
-			System.out.println(e.getMessage());
-			myDB.disconnect();
-			return false;
-		}
-	}*/
-	
 	/*renvoie le dernier id de l'annonce inserée */
 	public long getLastID()
 	{
@@ -241,7 +207,45 @@ public class AdvertismentDAO
 		}
 	}
 	
-	/* verifie que l'annonce passée en parametre existe dans la base de donnée */
+	public ArrayList<Advertisment> getUserAdvertisments(long idUser)
+	{
+		Database myDB = new Database();
+		Connection myConnection = myDB.connect();
+		ArrayList<Advertisment> myArrayList = new ArrayList<Advertisment>();
+		
+		try
+		{
+			String sqlCommand = "SELECT idAdvertisment,localisation,price,category,titre FROM advertisment WHERE iduser=?";
+			
+			PreparedStatement myStatement = myConnection.prepareStatement(sqlCommand,ResultSet.TYPE_SCROLL_SENSITIVE,ResultSet.CONCUR_UPDATABLE);
+			myStatement.setLong(1, idUser);
+			ResultSet myResultSet = myStatement.executeQuery();
+			
+			while(myResultSet.next())
+			{
+				Advertisment myAdvToReturn = new Advertisment();
+				myAdvToReturn.setIdAdvertisment(myResultSet.getLong(1));
+				myAdvToReturn.setLocalisation(myResultSet.getString(2));	
+				myAdvToReturn.setPrice(myResultSet.getFloat(3));
+				myAdvToReturn.setCategory(myResultSet.getString(4));
+				myAdvToReturn.setTitre(myResultSet.getString(5));
+				myArrayList.add(myAdvToReturn);
+			}
+			
+			myStatement.close();
+			myDB.disconnect();
+
+			return myArrayList;
+		}
+		catch (SQLException e) 
+		{
+			System.out.println(e.getMessage());
+			myDB.disconnect();
+			return null;
+		}
+	}
+	
+	/*verifie que l'annonce passée en parametre existe dans la base de donnée */
 	public boolean verify(Advertisment ad) 
 	{
 		Database myDB = new Database();
@@ -270,11 +274,10 @@ public class AdvertismentDAO
 					myStatement.close();
 					return false;	
 				}
-
 			}
 			return false;
 		}
-		catch (SQLException e) 
+		catch (SQLException e)
 		{
 			System.out.println(e.getMessage());
 			myDB.disconnect();

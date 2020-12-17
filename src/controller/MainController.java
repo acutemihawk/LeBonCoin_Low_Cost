@@ -57,12 +57,14 @@ public class MainController
 			myUserTmp.setPassword(password);
 			myUserTmp.setMail(mail);
 			
-			if(myUserDAO.insertUser(myUserTmp) == true);
+			if(myUserDAO.insertUser(myUserTmp) == true)
 			{
 				myBdd.disconnect();
 				System.out.println("User successfully created");
 				return true;
-			}	
+			}
+			else
+				return false;
 		}
 		else
 		{
@@ -84,13 +86,15 @@ public class MainController
 		myAdv.setPrice(price);
 		myAdv.setLocalisation(localisation);
 	
-		if (myAdvDAO.insertAd(myAdv) == true);
+		if (myAdvDAO.insertAd(myAdv) == true)
 		{
 			myAdv.setIdAdvertisment(myAdvDAO.getLastID()); 
 			myUser.getListAdvertisment().add((int) myAdv.getIdAdvertisment());
 			System.out.println("Advertisment successfully created");
 			return true;
 		}
+		else
+			return false;
 	}
 	
 	/* Retire l'annonce sur le site ayant pour id=idAdvToDel */
@@ -104,8 +108,10 @@ public class MainController
 		myAdvToDel.setIdAdvertisment(idAdvToDel);
 		if(myAdvDAO.deleteAd(myAdvToDel) == true)
 		{
-			if(myUser.getListAdvertisment().remove(myAdvToDel.getIdAdvertisment()) == false);
+			if(myUser.getListAdvertisment().remove(myAdvToDel.getIdAdvertisment()) == false)
 				return true;
+			else
+				return false;
 		}
 		else
 			return false;
@@ -156,8 +162,10 @@ public class MainController
 		offerToDel.setIdOffer(idOffer);
 		if(myOfDAO.deleteOf(offerToDel) == true)
 		{
-			if (myUser.getListOffer().remove(offerToDel.getIdOffer()) == false);
+			if (myUser.getListOffer().remove(offerToDel.getIdOffer()) == true)
 				return true;
+			else
+				return false;
 		}
 			
 		else

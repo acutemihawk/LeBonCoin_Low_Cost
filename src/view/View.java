@@ -380,8 +380,8 @@ public class View
 		System.out.println("Id : " + ad.getIdAdvertisment());
 		System.out.println("Title : " + ad.getTitre());
 		System.out.println("Price : " + ad.getPrice() + "€");
-		System.out.println("Category: " + ad.getCategory());
-		System.out.println("Description " + ad.getDescription());
+		System.out.println("Category : " + ad.getCategory());
+		System.out.println("Description : " + ad.getDescription());
         System.out.println("----------------------------------------------------------------------");
         
         
@@ -492,7 +492,15 @@ public class View
 				System.out.println("Please enter the id (number on the right) of the proposition you want to delete :");
 				long idOffer = myScanner.nextInt();
 				if(mainController.delUserProposition(idOffer) == true)
-					System.out.println("Your proposition was successfully deleted ");
+				{
+					System.out.println("Your proposition was successfully deleted.");
+					displayUserPropositions();
+				}
+				else
+				{
+					System.out.println("Your proposition was not deleted, looser!");
+					displayUserPropositions();
+				}
 			}
 			else if(option_number == 2)
 			{
@@ -525,7 +533,6 @@ public class View
 			System.out.println("3 - Return");
 
 	        ArrayList<Offer> myArrayList = new ArrayList<Offer>();
-	        mainController.userConnect("batpiste", "azerty");
 	        myArrayList = mainController.getUserReceivedOffer();
 	        
 	        for (Offer receivedOffer : myArrayList)
@@ -586,7 +593,30 @@ public class View
 	//fonction creation d'une offre
 	public void makeOffer()
 	{
-		
+		try
+        {
+			System.out.println("Please enter the id (number on the right) of the proposition you want to purchase :");
+            long idAdvertisment = myScanner.nextLong();
+            
+            System.out.println("Please enter the price of the item you wish purchase :");
+            float newPrice = myScanner.nextFloat();
+			
+            if(mainController.addUserProposition(idAdvertisment, newPrice))
+            	System.out.println("Your proposition has been successfully added!");
+            else
+            	System.out.println("An error has occured, please try again.");
+            
+            connectedUser();
+            
+        }
+		catch(NumberFormatException myException)
+		{
+			System.out.println("Please enter a number !");
+		}
+		catch(InputMismatchException myException)
+		{
+			System.out.println("The argument you entered is invalid");
+		}
 	}
 	
 	

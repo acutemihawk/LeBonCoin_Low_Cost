@@ -61,6 +61,7 @@ public class OfferDAO
 			return false;
 		}
 	}
+
 	
 	/* delete de la table offre l'offre passée en parametre puis appelle la fonction deleteOfferInfo */
 	public boolean deleteOf(Offer Of)
@@ -289,6 +290,37 @@ public class OfferDAO
 			myStatement.close();
 			myDB.disconnect();
 			return id;
+		}
+		catch (SQLException e) 
+		{
+			System.out.println(e.getMessage());
+			myDB.disconnect();
+			return 0;
+		}
+	}
+	
+
+	public float getNewPrice(Offer Of) 
+	{
+		Database myDB = new Database();
+		Connection myConnection = myDB.connect();
+		float newPrice =0;
+		try
+		{
+			String sqlCommand = " SELECT price_offer FROM offerinfo WHERE idoffer= ?";
+			
+			PreparedStatement myStatement = myConnection.prepareStatement(sqlCommand,ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+			myStatement.setLong(1, Of.getIdOffer());
+			ResultSet rs = myStatement.executeQuery();
+			
+			if(rs.next())
+			{
+				newPrice = rs.getFloat(1);
+			}
+			
+			myStatement.close();
+			myDB.disconnect();
+			return newPrice;
 		}
 		catch (SQLException e) 
 		{

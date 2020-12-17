@@ -139,7 +139,7 @@ public class AdvertismentDAO
 		try
 		{
 			//l'id, le titre, le prix, et le titre
-			String sqlCommand = "SELECT idAdvertisment,localisation,price,category,titre, description FROM advertisment WHERE LOWER(category) LIKE ? AND price > ? and price < ? AND LOWER(localisation) LIKE ?" ;
+			String sqlCommand = "SELECT idAdvertisment,localisation,price,category,titre FROM advertisment WHERE LOWER(category) LIKE ? AND price > ? and price < ? AND LOWER(localisation) LIKE ? " ;
 			
 			PreparedStatement myStatement = myConnection.prepareStatement(sqlCommand,ResultSet.TYPE_SCROLL_SENSITIVE,ResultSet.CONCUR_UPDATABLE);
 			myStatement.setString(4, "%"+localisation.toLowerCase()+"%");
@@ -156,7 +156,6 @@ public class AdvertismentDAO
 				myAdvToReturn.setPrice(myResultSet.getFloat(3));
 				myAdvToReturn.setCategory(myResultSet.getString(4));
 				myAdvToReturn.setTitre(myResultSet.getString(5));
-				myAdvToReturn.setDescription(myResultSet.getString(6));
 				myArrayList.add(myAdvToReturn);
 			}
 			
@@ -203,7 +202,44 @@ public class AdvertismentDAO
 			return null;
 		}		
 	}
+	
+	public ArrayList<Advertisment> getAdvertismentsFromCategory(String category)
+	{
+		Database myDB = new Database();
+		Connection myConnection = myDB.connect();
+		ArrayList<Advertisment> myArrayList = new ArrayList<Advertisment>();
+		
+		try
+		{
+			String sqlCommand = "SELECT idAdvertisment,localisation,price,category,titre FROM advertisment WHERE LOWER(category) LIKE ?" ;
+			
+			PreparedStatement myStatement = myConnection.prepareStatement(sqlCommand,ResultSet.TYPE_SCROLL_SENSITIVE,ResultSet.CONCUR_UPDATABLE);
+			myStatement.setString(1, "%"+category.toLowerCase()+"%");
+			ResultSet myResultSet = myStatement.executeQuery();
+			
+			while(myResultSet.next())
+			{
+				Advertisment myAdvToReturn = new Advertisment();
+				myAdvToReturn.setIdAdvertisment(myResultSet.getLong(1));
+				myAdvToReturn.setLocalisation(myResultSet.getString(2));	
+				myAdvToReturn.setPrice(myResultSet.getFloat(3));
+				myAdvToReturn.setCategory(myResultSet.getString(4));
+				myAdvToReturn.setTitre(myResultSet.getString(5));
+				myArrayList.add(myAdvToReturn);
+			}
+			
+			myStatement.close();
+			myDB.disconnect();
 
+			return myArrayList;
+		}
+		catch (SQLException e) 
+		{
+			System.out.println(e.getMessage());
+			myDB.disconnect();
+			return null;
+		}
+	}
 	
 	/* verifie que l'annonce passée en parametre existe dans la base de donnée */
 	public boolean verify(Advertisment ad) 

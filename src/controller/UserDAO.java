@@ -70,8 +70,80 @@ public class UserDAO
 			return myList;
 		}
 	}
-	/* renvoie la liste d'offre de l'utilisateur passé en parametre */
+	
 	public ArrayList<Integer> getUserListOffer(User myUser)
+	{
+		Database myBdd = new Database();
+		Connection myConnection = myBdd.connect();
+		ArrayList<Integer> myList = new ArrayList<Integer>();
+		try
+		{
+			String SQL = "SELECT offer.idoffer FROM advertisment "
+					+ "INNER JOIN OFFER ON advertisment.idAdvertisment= offer.idAdvertisment "
+					+ "INNER JOIN offerinfo USING(idoffer)"
+					+ " WHERE advertisment.iduser= ?"; 
+			
+			PreparedStatement myStatement = myConnection.prepareStatement(SQL);
+			myStatement.setLong(1, myUser.getIdUser());
+			ResultSet rs  = myStatement.executeQuery();
+			
+			while(rs.next())
+			{
+				myList.add((int) rs.getLong(1));
+			}
+			
+			myStatement.close();
+			myBdd.disconnect();
+			return myList;
+		}
+		catch (SQLException e) 
+		{
+			System.out.println(e.getMessage());
+			myBdd.disconnect();
+			return myList;
+		}
+	}
+	/*
+	public ArrayList<Offer> getUserListOffer(User myUser)
+	{
+		Database myBdd = new Database();
+		Connection myConnection = myBdd.connect();
+		ArrayList<Offer> myList = new ArrayList<Offer>();
+		
+		try
+		{
+			String SQL = "SELECT advertisment.idAdvertisment,offer.iduser,offerinfo.price_offer, offer.idoffer FROM advertisment "
+					+ "INNER JOIN OFFER ON advertisment.idAdvertisment= offer.idAdvertisment "
+					+ "INNER JOIN offerinfo USING(idoffer)"
+					+ " WHERE advertisment.iduser= ?"; 
+			
+			PreparedStatement myStatement = myConnection.prepareStatement(SQL);
+			myStatement.setLong(1, myUser.getIdUser());
+			ResultSet rs  = myStatement.executeQuery();
+			
+			while(rs.next())
+			{
+				Offer Of = new Offer();
+				Of.setIdAdvertisment(rs.getLong(1));
+				Of.setNewPrice(rs.getFloat(3));
+				Of.setIdBuyer(rs.getLong(2));
+				Of.setIdOffer(rs.getLong(4));
+				myList.add(Of);
+			}
+			myStatement.close();
+			myBdd.disconnect();
+			return myList;
+		}
+		catch (SQLException e) 
+		{
+			System.out.println(e.getMessage());
+			myBdd.disconnect();
+			return myList;
+		}
+	}*/
+	
+	/* renvoie la liste des propositions faites par l'utilisateur passé en parametre */
+	public ArrayList<Integer> getUserListPropositions(User myUser)
 	{
 		Database myBdd = new Database();
 		Connection myConnection = myBdd.connect();
@@ -126,8 +198,7 @@ public class UserDAO
 			myBdd.disconnect();
 			System.out.println(e.getMessage());
 			return mailTmp;
-		}
-		
+		}	
 	}
 	
 	public boolean insertUser(User userToCreate)

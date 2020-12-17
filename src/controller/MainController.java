@@ -1,5 +1,7 @@
 package controller;
 
+import java.util.ArrayList;
+
 import model.*;
 
 public class MainController 
@@ -33,7 +35,7 @@ public class MainController
 			myUser.setPassword(password);
 			myUser.setIdUser(myUserDAO.getUserId(myUser));
 			myUser.setListAdvertisment(myUserDAO.getUserListAdv(myUser));
-			myUser.setListOffer(myUserDAO.getUserListOffer(myUser));
+			myUser.setListOffer(myUserDAO.getUserListPropositions(myUser));
 			myUser.setMail(myUserDAO.getUserMail(myUser));
 			myUser.setConnected(true);
 			myBdd.disconnect();
@@ -147,9 +149,10 @@ public class MainController
 	@SuppressWarnings("unlikely-arg-type")
 	public boolean delUserOffer(long idOffer)
 	{
+		System.out.println(testConnection());
 		if (testConnection() == false)
 			return false;
-		
+
 		Offer offerToDel = new Offer();
 		offerToDel.setIdOffer(idOffer);
 		if(myOfDAO.deleteOf(offerToDel) == true)
@@ -172,7 +175,7 @@ public class MainController
 		
 		if (myOfDAO.getAdvID(myOffer) == 0)
 		{
-			System.out.println("Veuillez accepter une offre qui vous appartient");
+			System.out.println("Please accept an offer that is addressed to you ");
 			return false;
 		}
 		
@@ -187,7 +190,7 @@ public class MainController
 
 	}
 	
-	// supprime l'offre associé a l'annonce ayant pour id idOffer 
+	// Supprime l'offre associé a l'annonce ayant pour id idOffer 
 	public boolean refuseOffer(long idOffer)
 	{
 		if (testConnection() == false)
@@ -205,6 +208,46 @@ public class MainController
 		return myOfDAO.deleteOf(offerToDel);
 	}
 	
+	/* returns an arrayList of offer that represents all of the proposition made by the user to different advertisment */
+	public ArrayList<Offer> getUserPropositions()
+	{
+		if (testConnection() == false)
+			return null;
+		
+		ArrayList<Offer> myArrayToReturn = new ArrayList<Offer>();
+		
+		for (int tmp : myUser.getListOffer())
+		{
+			Offer Of = new Offer();
+			Of.setIdOffer(tmp);
+			Of.setIdAdvertisment(myOfDAO.getAdvID(Of));
+			Of.setNewPrice(myOfDAO.getNewPrice(Of));
+			myArrayToReturn.add(Of);
+		}
+		return myArrayToReturn;
+	}
+	
+	/* renvoie une listes des offre recues par l'uitlisateurs */
+	public ArrayList<Offer> getUserOffer()
+	{
+		if (testConnection() == false)
+			return null;
+		
+		ArrayList<Offer> myArrayToReturn = new ArrayList<Offer>();
+		
+		for (int loop : myUserDAO.getUserListOffer(myUser))
+		{
+			Offer myOf = new Offer();
+			myOf.setIdOffer(loop);
+			myOf.setIdAdvertisment(myOfDAO.getAdvID(myOf));
+			myOf.setNewPrice(myOfDAO.getNewPrice(myOf));
+			myOf.setIdBuyer(myOfDAO.getUserID(myOf));
+			myArrayToReturn.add(myOf);
+		}
+		
+		return myArrayToReturn;
+		
+	}
 	
 	public User getMyUser() 
 	{
@@ -225,6 +268,22 @@ public class MainController
 		}
 		else
 			return true;
+	}
+
+	public UserDAO getMyUserDAO() {
+		return myUserDAO;
+	}
+
+	public void setMyUserDAO(UserDAO myUserDAO) {
+		this.myUserDAO = myUserDAO;
+	}
+
+	public OfferDAO getMyOfDAO() {
+		return myOfDAO;
+	}
+
+	public void setMyOfDAO(OfferDAO myOfDAO) {
+		this.myOfDAO = myOfDAO;
 	}
 
 	public Offer getMyOffer() 

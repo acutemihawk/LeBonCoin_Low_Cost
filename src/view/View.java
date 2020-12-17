@@ -5,7 +5,7 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 
 import controller.*;
-import model.Advertisment;
+import model.*;
 
 public class View
 {
@@ -69,6 +69,11 @@ public class View
 			{
 				createAccount();
 			}
+			else
+			{
+				System.out.println("You have chosen the ultimate choice, now go back to the main menu!");
+				mainMenu();
+			}
 		}
 		catch(NumberFormatException myException)
 		{
@@ -83,7 +88,53 @@ public class View
 	//fonction qui affiche le nouveau menu une fois que l'utilisateur s'est co
 	public void connectedUser()
 	{
+		System.out.println("----------------------------------------------------------------------");
+		System.out.println("Choose one option from below and press Enter to navigate :");
+		System.out.println("1 - Browse");
+		System.out.println("2 - Create an advertisment");
+		System.out.println("3 - Consult my propositions");
+		System.out.println("4 - Consult my received offers");
+		System.out.println("5 - Return");
+		System.out.println("----------------------------------------------------------------------");
 		
+		try
+		{
+			option_number = myScanner.nextInt();
+
+			if(option_number == 1)
+			{
+				browse();
+			}
+			else if(option_number == 2)
+			{
+				createAdvertisment();
+			}
+			else if(option_number == 3)
+			{
+				displayUserPropositions();
+			}
+			else if(option_number == 4)
+			{
+				//************************************ consult my offers
+			}
+			else if(option_number == 5)
+			{
+				mainMenu();
+			}
+			else
+			{
+				System.out.println("You have chosen the ultimate choice, now go back to the main menu!");
+				mainMenu();
+			}
+		}
+		catch(NumberFormatException myException)
+		{
+			System.out.println("Please enter a number !");
+		}
+		catch(InputMismatchException myException)
+		{
+			System.out.println("The argument you entered is invalid");
+		}
 	}
 	
 	//fonction parcourir
@@ -99,7 +150,7 @@ public class View
 		System.out.println("1 - Search with parameters");
 		System.out.println("2 - Return");
 		
-		for ( int categoryLoop=0 ; categoryLoop < categoriesArray.size(); categoryLoop++)
+		for (int categoryLoop=0 ; categoryLoop < categoriesArray.size(); categoryLoop++)
 		{
 			numberToDisplay = categoryLoop + 3;
 			System.out.println(numberToDisplay + " - " + categoriesArray.get(categoryLoop));
@@ -121,10 +172,15 @@ public class View
 				else
 					mainMenu();
 			}
-			else if(option_number > 2 && option_number < categoriesArray.size()+2)
+			else if(option_number > 2 && option_number <= categoriesArray.size()+2)
 			{
-				//displayCategory(categoriesArray[option_number-3]);****************************
-			} 
+				displayCategory(categoriesArray.get(option_number-3));
+			}
+			else
+			{
+				System.out.println("You have chosen the ultimate choice, now go back to the main menu!");
+				mainMenu();
+			}
 		}
 		catch(NumberFormatException myException)
 		{
@@ -232,8 +288,12 @@ public class View
 			else if(option_number > 2 && option_number < advertismentList.size()+2)
 			{
 				displayAdvertisment(advertismentList.get(option_number-3));
-			} 
-            
+			}
+			else
+			{
+				System.out.println("You have chosen the ultimate choice, now go back to the main menu!");
+				mainMenu();
+			}
         }
 		catch(NumberFormatException myException)
 		{
@@ -245,87 +305,73 @@ public class View
 		}
     }
 	
-	
 	//fonction qui affiche les categories
 	public void displayCategory(String category_name)
 	{
-		/*String[][] advertismentsArray = null;
-		int numberToDisplay = 0;
-		int advertismentLoop = 1;
-		
-		Database myDB = new Database();
-		Connection myConnection = myDB.connect();
-		
-		try
-		{
-			String sqlCommand = "SELECT idAdvertisment, localisation, price, title FROM advertisment WHERE category=?";
-			PreparedStatement myStatement = myConnection.prepareStatement(sqlCommand);
-			myStatement.setString(1, category_name);
-			ResultSet rs  = myStatement.executeQuery();
-			
-			while(rs.next())
-			{
-				advertismentsArray[advertismentLoop-1] = rs.getString(1);
-				
-			}
-			
-			myStatement.close();
-			myDB.disconnect();
-		}
-		catch (SQLException e)
-		{
-			System.out.println(e.getMessage());
-			myDB.disconnect();
-		}
-		
-		System.out.println("--------------------------------------------------");
-		System.out.println("Choose one option from below and press Enter to navigate :");
-		System.out.println("1 - Make an offer");
-		System.out.println("2 - Return");
-		
-		for(int advertismentLoop = 0; advertismentLoop < advertismentsArray.length; advertismentLoop++)
-		{
-			numberToDisplay = advertismentLoop + 3;
-			System.out.println(numberToDisplay + " - " + advertismentsArray[advertismentLoop]);
-		}
-		System.out.println("--------------------------------------------------");
-		
-		
-		try
-		{
-			option_number = myScanner.nextInt();
-			
+		int numberToDisplay = 3;
+        
+        ArrayList<Advertisment> advertismentList = new ArrayList<Advertisment>();
+        
+        try
+        {
+            advertismentList = mainController.getMyAdvDAO().getAdvertismentsFromCategory(category_name);
+            
+            System.out.println("----------------------------------------------------------------------");
+    		System.out.println("Choose one option from below and press Enter to navigate :");
+    		System.out.println("1 - Make an offer");
+    		System.out.println("2 - Return");
+    		
+            for( Advertisment advTmp : advertismentList)
+            {
+            	System.out.println(numberToDisplay+" - "+advTmp.getTitre()+" "+advTmp.getPrice()+" ("+advTmp.getIdAdvertisment()+")");
+            	numberToDisplay++;
+            }
+            System.out.println("----------------------------------------------------------------------");
+            
+            option_number = myScanner.nextInt();
+
 			if(option_number == 1)
 			{
-				makeOffer();
+				
+				if(mainController.getMyUser().isConnected())
+				{
+					makeOffer();
+				}
+				else
+				{
+					System.out.println("Error: You need to be connected to make an offer.");
+					mainMenu();
+				}
 			}
 			else if(option_number == 2)
 			{
-				if(mainController.getMyUser().isConnected())
-					connectedUser();
-				else
-					mainMenu();
+				browse();
 			}
-			else if(option_number > 2 && option_number < categoriesArray.length+2)
+			else if(option_number > 2 && option_number < advertismentList.size()+2)
 			{
-				displayCategory(categoriesArray[option_number-3]);
+				displayAdvertisment(advertismentList.get(option_number-3));
 			}
-		}
+			else
+			{
+				System.out.println("You have chosen the ultimate choice, now go back to the main menu!");
+				mainMenu();
+			}
+        }
 		catch(NumberFormatException myException)
 		{
-			System.out.println("L'argument de la commande Push doit etre entier !");
+			System.out.println("Please enter a number !");
 		}
-		catch(InputMismatchException myException) //à voir si on doit le garder
+		catch(InputMismatchException myException)
 		{
-			System.out.println("L'argument de doit etre un identifiant (nombre entier)");
-		}*/
-		
+			System.out.println("The argument you entered is invalid");
+		}
 	}
 	
 	//fonction qui affiche une annonce
 	public void displayAdvertisment(Advertisment ad)
 	{
 		System.out.println("----------------------------------------------------------------------");
+		System.out.println("1 - Return");
 		System.out.println("Id : " + ad.getIdAdvertisment());
 		System.out.println("Title : " + ad.getTitre());
 		System.out.println("Price : " + ad.getPrice() + "€");
@@ -334,9 +380,132 @@ public class View
         System.out.println("----------------------------------------------------------------------");
         
         
-        //**************** ajouter scanner pour return
-        
+        try
+        {
+        	option_number = myScanner.nextInt();
+        	
+			if(option_number == 1)
+			{
+				browse();
+			}
+			else
+			{
+				System.out.println("You have chosen the ultimate choice, now go back to the main menu!");
+				mainMenu();
+			}
+        }
+		catch(NumberFormatException myException)
+		{
+			System.out.println("Please enter a number !");
+		}
+		catch(InputMismatchException myException)
+		{
+			System.out.println("The argument you entered is invalid");
+		}
 	}
+	
+	public void createAdvertisment()
+	{
+		try
+		{
+	        String localisation = "";
+	        float price = 0;
+	        String description="";
+	        String category ="";
+	        String titre ="";
+	        
+	        System.out.println("Please, enter some  about the advertisment:");
+	        
+	        System.out.println("Category : ");
+	        category = myScanner.next();
+	        // Consuming the leftover new line 
+	        myScanner.nextLine();
+	        
+	        System.out.println("Localisation : ");
+	        localisation = myScanner.next();
+	        // Consuming the leftover new line 
+	        myScanner.nextLine();
+	        
+	        System.out.println("Title : ");
+	        titre = myScanner.nextLine();
+	
+	        System.out.println("Description : ");
+	        description = myScanner.nextLine();
+	        
+	        System.out.println("Price :");
+	        price = myScanner.nextFloat();
+	        // Consuming the leftover new line 
+	        myScanner.nextLine();
+	        
+	        mainController.addUserAdvertisment(titre, localisation, price, description, category);
+	        
+	        connectedUser();
+		}
+		catch(NumberFormatException myException)
+		{
+			System.out.println("Please enter a number !");
+		}
+		catch(InputMismatchException myException)
+		{
+			System.out.println(myException.getMessage());
+		}
+	}
+	
+	public void displayUserPropositions()
+	{
+		int numberToDisplay = 3;
+		
+		System.out.println("----------------------------------------------------------------------");
+		System.out.println("Choose one option from below and press Enter to navigate");
+		System.out.println("These are your currents propositions :");
+		System.out.println("1 - Cancel a proposition");
+		System.out.println("2 - Return");
+		
+		try
+		{
+	        ArrayList<Offer> myArrayList = new ArrayList<Offer>();
+	        myArrayList = mainController.getUserPropositions();
+	        
+	        for ( Offer propositionTmp : myArrayList )
+	        {
+	        	System.out.println(numberToDisplay+" - You made a proposition for the advertisment : "+propositionTmp.getIdAdvertisment()+" at the price of : "+propositionTmp.getNewPrice()+"$ ("+propositionTmp.getIdOffer()+")");
+	        	numberToDisplay++;
+	        }
+	        System.out.println("----------------------------------------------------------------------");
+		}
+		catch( NullPointerException myException)
+		{
+			System.out.println("You need to register to use this functionnality");
+		}
+		
+		try
+		{
+			option_number = myScanner.nextInt();
+			
+			if(option_number == 1)
+			{
+				System.out.println("Please enter the id (number on the right) of the proposition you want to delete :");
+				long idOffer = myScanner.nextInt();
+				if(mainController.delUserOffer(idOffer) == true)
+					System.out.println("Your proposition was successfully deleted ");
+			}
+			else if(option_number == 2)
+			{
+				connectedUser();
+				// call return function @Naoufal
+			}
+			else
+			{
+				System.out.println("You have chosen the ultimate choice, now go back to the main menu!");
+				mainMenu();
+			}
+		}
+		catch(InputMismatchException myException)
+		{
+			System.out.println("The argument you entered is invalid");
+		}
+	}
+	
 	
 	//fonction creation d'une offre
 	public void makeOffer()

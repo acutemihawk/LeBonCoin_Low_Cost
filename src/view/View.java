@@ -96,7 +96,7 @@ public class View
 		System.out.println("----------------------------------------------------------------------");
 		System.out.println("Choose one option from below and press Enter to navigate :");
 		System.out.println("1 - Browse");
-		System.out.println("2 - Create an advertisment");
+		System.out.println("2 - Consult my advertisments");
 		System.out.println("3 - Consult my propositions");
 		System.out.println("4 - Consult my received offers");
 		System.out.println("5 - Return");
@@ -112,7 +112,7 @@ public class View
 			}
 			else if(option_number == 2)
 			{
-				createAdvertisment();
+				consultAdvertisments();
 			}
 			else if(option_number == 3)
 			{
@@ -379,7 +379,7 @@ public class View
 		System.out.println("1 - Return");
 		System.out.println("Id : " + ad.getIdAdvertisment());
 		System.out.println("Title : " + ad.getTitre());
-		System.out.println("Price : " + ad.getPrice() + "€");
+		System.out.println("Price : " + ad.getPrice() + "$");
 		System.out.println("Category : " + ad.getCategory());
 		System.out.println("Description : " + ad.getDescription());
         System.out.println("----------------------------------------------------------------------");
@@ -458,8 +458,6 @@ public class View
 	
 	public void displayUserPropositions()
 	{
-		int numberToDisplay = 3;
-		
 		System.out.println("----------------------------------------------------------------------");
 		System.out.println("Choose one option from below and press Enter to navigate");
 		System.out.println("These are your currents propositions :");
@@ -473,8 +471,7 @@ public class View
 	        
 	        for ( Offer propositionTmp : myArrayList )
 	        {
-	        	System.out.println(numberToDisplay+" - You made a proposition for the advertisment : "+propositionTmp.getIdAdvertisment()+" at the price of : "+propositionTmp.getNewPrice()+"$ ("+propositionTmp.getIdOffer()+")");
-	        	numberToDisplay++;
+	        	System.out.println("- You made a proposition for the advertisment : "+propositionTmp.getIdAdvertisment()+" at the price of : "+propositionTmp.getNewPrice()+"$ ("+propositionTmp.getIdOffer()+")");;
 	        }
 	        System.out.println("----------------------------------------------------------------------");
 		}
@@ -505,7 +502,6 @@ public class View
 			else if(option_number == 2)
 			{
 				connectedUser();
-				// call return function @Naoufal
 			}
 			else
 			{
@@ -523,8 +519,6 @@ public class View
 	{
 		try
 		{
-			int numberToDisplay = 4;
-			
 			System.out.println("----------------------------------------------------------------------");
 			System.out.println("Choose one option from below and press Enter to navigate");
 			System.out.println("These are your currents offer :");
@@ -539,9 +533,8 @@ public class View
 	        {
 	        	User buyer = new User();
 	        	buyer.setIdUser(receivedOffer.getIdBuyer());
-	        	System.out.println(numberToDisplay+" - You received an offer from : "+mainController.getMyUserDAO().getUserName(buyer)+" on the advertisment : "+receivedOffer.getIdAdvertisment()+" at the price of : "+receivedOffer.getNewPrice()+"$"
+	        	System.out.println("- You received an offer from : "+mainController.getMyUserDAO().getUserName(buyer)+" on the advertisment : "+receivedOffer.getIdAdvertisment()+" at the price of : "+receivedOffer.getNewPrice()+"$"
 	        			+ " ("+receivedOffer.getIdOffer()+") ");
-	        	numberToDisplay++;
 	        }
 	        
 	        System.out.println("----------------------------------------------------------------------");
@@ -619,8 +612,112 @@ public class View
 		}
 	}
 	
+	public void consultAdvertisments()
+	{
+		System.out.println("----------------------------------------------------------------------");
+		System.out.println("Choose one option from below and press Enter to navigate :");
+		System.out.println("1 - Create an advertisment");
+		System.out.println("2 - Delete an advertisment");
+		System.out.println("3 - Consult my advertisments");
+		System.out.println("4 - Return");
+		System.out.println("----------------------------------------------------------------------");
+		
+		try
+		{
+			option_number = myScanner.nextInt();
+
+			if(option_number == 1)
+			{
+				createAdvertisment();
+			}
+			else if(option_number == 2)
+			{
+				System.out.println("Please enter the id (number on the right) of the advertisment you want to delete :");
+				long idAdvToDel = myScanner.nextInt();
+				
+				mainController.delUserAdvertisment(idAdvToDel);
+			}
+			else if(option_number == 3)
+			{
+				displayUserAdvertisments();
+			}
+			else if(option_number == 4)
+			{
+				connectedUser();
+			}
+			else
+			{
+				System.out.println("You have chosen the ultimate choice, now go back to the main menu!");
+				mainMenu();
+			}
+		}
+		catch(NumberFormatException myException)
+		{
+			System.out.println("Please enter a number !");
+		}
+		catch(InputMismatchException myException)
+		{
+			System.out.println("The argument you entered is invalid");
+		}
+	}
 	
-	
+	public void displayUserAdvertisments()
+	{
+		System.out.println("----------------------------------------------------------------------");
+		System.out.println("Choose one option from below and press Enter to navigate");
+		System.out.println("These are your current advertisments :");
+		System.out.println("1 - Return");
+		
+		try
+		{
+	        ArrayList<Offer> myArrayList = new ArrayList<Offer>();
+	        myArrayList = mainController.getUserPropositions();
+	        
+	        for ( Offer propositionTmp : myArrayList )
+	        {
+	        	System.out.println("- You made a proposition for the advertisment : "+propositionTmp.getIdAdvertisment()+" at the price of : "+propositionTmp.getNewPrice()+"$ ("+propositionTmp.getIdOffer()+")");;
+	        }
+	        System.out.println("----------------------------------------------------------------------");
+		}
+		catch( NullPointerException myException)
+		{
+			System.out.println("You need to register to use this functionnality");
+		}
+		
+		try
+		{
+			option_number = myScanner.nextInt();
+			
+			if(option_number == 1)
+			{
+				System.out.println("Please enter the id (number on the right) of the proposition you want to delete :");
+				long idOffer = myScanner.nextInt();
+				if(mainController.delUserProposition(idOffer) == true)
+				{
+					System.out.println("Your proposition was successfully deleted.");
+					displayUserPropositions();
+				}
+				else
+				{
+					System.out.println("Your proposition was not deleted, looser!");
+					displayUserPropositions();
+				}
+			}
+			else if(option_number == 2)
+			{
+				connectedUser();
+			}
+			else
+			{
+				System.out.println("You have chosen the ultimate choice, now go back to the main menu!");
+				mainMenu();
+			}
+		}
+		catch(InputMismatchException myException)
+		{
+			System.out.println("The argument you entered is invalid");
+		}
+	}
 	
 	
 	

@@ -17,8 +17,8 @@ public class Main
 	 */
 	public static void main(String[] args) 
 	{
-		View myView = new View();
-		myView.mainMenu();
+		Window myWindow = new Window();
+		myWindow.mainMenu();
 	}
 
 }

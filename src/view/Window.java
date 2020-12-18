@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package view;
 
 import java.util.ArrayList;
@@ -11,7 +14,7 @@ import model.*;
 /**
  * The Class View.
  */
-public class View
+public class Window
 {
 	
 	/** The main controller. */
@@ -29,7 +32,7 @@ public class View
 	/**
 	 * Instantiates a new view.
 	 */
-	public View()
+	public Window()
 	{
 		mainController = new MainController();
 		myScanner = new Scanner(System.in);
@@ -39,9 +42,8 @@ public class View
 	}
 	
 	/**
-	 * Main menu.
+	 * Display main menu
 	 */
-	//fonction du démarrage de l'application
 	public void mainMenu()
 	{
 		System.out.println("----------------------------------------------------------------------");
@@ -102,16 +104,15 @@ public class View
 		{
 			System.out.println("Please enter a number !");
 		}
-		catch(InputMismatchException myException) //à voir si on doit le garder
+		catch(InputMismatchException myException) 
 		{
 			System.out.println("The argument you entered is invalid");
 		}
 	}
 	
 	/**
-	 * Connected user.
+	 * display the menu after the user connection, or if the user wish to browse only
 	 */
-	//fonction qui affiche le nouveau menu une fois que l'utilisateur s'est co
 	public void connectedUser()
 	{
 		System.out.println("----------------------------------------------------------------------");
@@ -164,9 +165,8 @@ public class View
 	}
 	
 	/**
-	 * Browse.
+	 * Display Category of advertisment and search option
 	 */
-	//fonction parcourir
 	public void browse()
 	{
 		ArrayList<String> categoriesArray = new ArrayList<String>();
@@ -222,9 +222,8 @@ public class View
 	}
 	
 	/**
-	 * Creates the account.
+	 * Asks for user input to create account
 	 */
-	//fonction creation d'un compte
 	public void createAccount()
 	{
 		String username;
@@ -258,9 +257,8 @@ public class View
 	}
 	
 	/**
-	 * Search.
+	 * Ask for user input to search and display a list of Advertisment returned by the result of the research
 	 */
-	//fonction search avec paramètres
 	public void search()
     {
 		int numberToDisplay = 3;
@@ -341,11 +339,10 @@ public class View
     }
 	
 	/**
-	 * Display category.
+	 * Display Advertisment that are within the category
 	 *
 	 * @param category_name the category name
 	 */
-	//fonction qui affiche les categories
 	public void displayCategory(String category_name)
 	{
 		int numberToDisplay = 3;
@@ -387,7 +384,7 @@ public class View
 			{
 				browse();
 			}
-			else if(option_number > 2 && option_number < advertismentList.size()+2)
+			else if(option_number > 2 && option_number <= advertismentList.size()+2)
 			{
 				displayAdvertisment(advertismentList.get(option_number-3));
 			}
@@ -408,11 +405,10 @@ public class View
 	}
 	
 	/**
-	 * Display advertisment.
+	 * Display all field of an advertisment.
 	 *
 	 * @param ad the ad
 	 */
-	//fonction qui affiche une annonce
 	public void displayAdvertisment(Advertisment ad)
 	{
 		System.out.println("----------------------------------------------------------------------");
@@ -450,7 +446,7 @@ public class View
 	}
 	
 	/**
-	 * Creates the advertisment.
+	 * Creates an advertisment.
 	 */
 	public void createAdvertisment()
 	{
@@ -500,7 +496,7 @@ public class View
 	}
 	
 	/**
-	 * Display user propositions.
+	 * Display all user propositions and enable the user to cancel its proposition
 	 */
 	public void displayUserPropositions()
 	{
@@ -562,7 +558,7 @@ public class View
 	}
 	
 	/**
-	 * Display user received offer.
+	 * Display all user received offer and enable the user to accept/refuse offers
 	 */
 	public void displayUserReceivedOffer()
 	{
@@ -635,9 +631,8 @@ public class View
 	}
 	
 	/**
-	 * Make offer.
+	 * Ask for inputs then create offer
 	 */
-	//fonction creation d'une offre
 	public void makeOffer()
 	{
 		try
@@ -667,7 +662,7 @@ public class View
 	}
 	
 	/**
-	 * Display user advertisments.
+	 * Display all advertisment that belongs to the user and permits creation/suppression of advertisment
 	 */
 	public void displayUserAdvertisments()
 	{

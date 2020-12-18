@@ -84,10 +84,10 @@ public class Database
 		}
 		try
 		{	
-			String SQL = " SELECT username,password FROM USER WHERE username = ? AND password = ?";
+			String SQL = "SELECT username,password FROM USER WHERE username = ? AND password = ?";
 			
 			PreparedStatement myStatement = myCon.prepareStatement(SQL);
-			myStatement.setString(1, username );
+			myStatement.setString(1, username);
 			myStatement.setString(2, password );
 			ResultSet myResult = myStatement.executeQuery();
 			

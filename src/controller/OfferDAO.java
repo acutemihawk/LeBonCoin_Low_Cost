@@ -13,12 +13,11 @@ public class OfferDAO
 {
 	
 	/**
-	 * Insert an offer .
+	 * Insert an offer into the database.
 	 *
-	 * @param Of the of
+	 * @param Of the offer
 	 * @return true, if successful
 	 */
-	/* insere dans la table offer l'offre passée en parametre */
 	public boolean insertOf(Offer Of)
 	{
 		Database myDB = new Database();
@@ -26,7 +25,7 @@ public class OfferDAO
 		
 		try
 		{
-			String sqlCommand = "INSERT INTO offer (idoffer,idAdverti sment, iduser) VALUES (?,?,?)";
+			String sqlCommand = "INSERT INTO offer (idoffer,idAdvertisment, iduser) VALUES (?,?,?)";
 			PreparedStatement myStatement = myConnection.prepareStatement(sqlCommand, ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
 			
 			myStatement.setLong(1, Of.getIdOffer());
@@ -48,9 +47,9 @@ public class OfferDAO
 	}
 	
 	/**
-	 * Insert information.
+	 * Insert the information of an offer into the database.
 	 *
-	 * @param Of the of
+	 * @param Of the offer
 	 * @return true, if successful
 	 */
 	public boolean insertInformation(Offer Of) 
@@ -79,14 +78,12 @@ public class OfferDAO
 		}
 	}
 
-	
 	/**
-	 * Delete of.
+	 * Delete an offer in the database.
 	 *
-	 * @param Of the of
+	 * @param Of the offer you want to delete
 	 * @return true, if successful
 	 */
-	/* delete de la table offre l'offre passée en parametre puis appelle la fonction deleteOfferInfo */
 	public boolean deleteOf(Offer Of)
 	{
 		Database myDB = new Database();
@@ -114,12 +111,11 @@ public class OfferDAO
 	}
 	
 	/**
-	 * Delete offer info.
+	 * Delete offer information of an offer.
 	 *
-	 * @param Of the of
+	 * @param Of the offer
 	 * @return true, if successful
 	 */
-	/* delete dans la table offreinfo les informations de l'offre passée en parametre dans la base de données */
 	private boolean deleteOfferInfo(Offer Of)
 	{
 		Database myDB = new Database();
@@ -145,12 +141,11 @@ public class OfferDAO
 	}
 	
 	/**
-	 * Delete all offer.
+	 * Delete all offers of an advertisment in the database.
 	 *
-	 * @param Of the of
+	 * @param Of the offer
 	 * @return true, if successful
 	 */
-	/* supprimes toutes les offres sur l'id de l'annonce passé en parametre puis appelle deleteAllOfferInfo*/
 	public boolean deleteAllOffer(Offer Of)
 	{
 		Database myDB = new Database();
@@ -185,7 +180,7 @@ public class OfferDAO
 	}
 	
 	/**
-	 * Delete all offer info.
+	 * Delete all offer information of the offers of an advertisment.
 	 *
 	 * @param idOf the id of
 	 * @return true, if successful
@@ -215,7 +210,7 @@ public class OfferDAO
 	}
 	
 	/**
-	 * Select all offer info.
+	 * Select all offer information of an idvertisment from the database.
 	 *
 	 * @param Of the of
 	 * @return the array list
@@ -252,11 +247,10 @@ public class OfferDAO
 	}
 	
 	/**
-	 * Gets the last offer ID.
+	 * Gets the ID of the alst offer created.
 	 *
 	 * @return the last offer ID
 	 */
-	/* renvoie l'id offer de l'offer appelant */
 	public long getLastOfferID()
 	{
 		Database myDB = new Database();
@@ -289,10 +283,10 @@ public class OfferDAO
 	}
 	
 	/**
-	 * Gets the adv ID.
+	 * Gets the advertisment ID corresponding to an offer.
 	 *
-	 * @param Of the of
-	 * @return the adv ID
+	 * @param Of the offer
+	 * @return the advertisment ID
 	 */
 	public long getAdvID(Offer Of)
 	{
@@ -326,12 +320,11 @@ public class OfferDAO
 	}
 	
 	/**
-	 * Gets the user ID.
+	 * Gets the id of the user you has created the offer
 	 *
-	 * @param Of the of
+	 * @param Of the offer
 	 * @return the user ID
 	 */
-	/* renvoie l'id de l'utilisateur qui a fait l'offre passé en parametre */
 	public long getUserID(Offer Of)
 	{
 		Database myDB = new Database();
@@ -365,10 +358,10 @@ public class OfferDAO
 	
 
 	/**
-	 * Gets the new price.
+	 * Gets the new price of an advertisment's item from the offer made.
 	 *
-	 * @param Of the of
-	 * @return the new price
+	 * @param Of the offer
+	 * @return the new price from the offer
 	 */
 	public float getNewPrice(Offer Of) 
 	{

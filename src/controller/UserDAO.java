@@ -19,12 +19,11 @@ public class UserDAO
 	}
 	
 	/**
-	 * Gets the user id.
+	 * Gets the id of the User in parameters
 	 *
-	 * @param myUser the my user
-	 * @return the user id
+	 * @param myUser 
+	 * @return user id
 	 */
-	/* renvoie l'id de l'utilisateur passé en parametere */
 	public int getUserId(User myUser)
 	{
 		Database myBdd = new Database();
@@ -57,10 +56,10 @@ public class UserDAO
 	}
 	
 	/**
-	 * Gets the user name.
+	 * Gets the username of the User in parameters
 	 *
-	 * @param myUser the my user
-	 * @return the user name
+	 * @param myUser 
+	 * @return username
 	 */
 	public String getUserName(User myUser)
     {
@@ -93,12 +92,11 @@ public class UserDAO
     }
 	
 	/**
-	 * Gets the user list adv.
+	 * Gets the list of Advertisment of the user in parameters
 	 *
-	 * @param myUser the my user
-	 * @return the user list adv
+	 * @param myUser 
+	 * @return a list of Advertisment
 	 */
-	/* renvoie la liste d'advertisment de l'utilisateur passé en parametre*/
 	public ArrayList<Integer> getUserListAdv(User myUser)
 	{
 		Database myBdd = new Database();
@@ -130,9 +128,9 @@ public class UserDAO
 	}
 	
 	/**
-	 * Gets the user list offer.
+	 * Gets the list of offer of the user in parameters
 	 *
-	 * @param myUser the my user
+	 * @param myUser 
 	 * @return the user list offer
 	 */
 	public ArrayList<Integer> getUserListOffer(User myUser)
@@ -167,47 +165,9 @@ public class UserDAO
 			return myList;
 		}
 	}
-	/*
-	public ArrayList<Offer> getUserListOffer(User myUser)
-	{
-		Database myBdd = new Database();
-		Connection myConnection = myBdd.connect();
-		ArrayList<Offer> myList = new ArrayList<Offer>();
-		
-		try
-		{
-			String SQL = "SELECT advertisment.idAdvertisment,offer.iduser,offerinfo.price_offer, offer.idoffer FROM advertisment "
-					+ "INNER JOIN OFFER ON advertisment.idAdvertisment= offer.idAdvertisment "
-					+ "INNER JOIN offerinfo USING(idoffer)"
-					+ " WHERE advertisment.iduser= ?"; 
-			
-			PreparedStatement myStatement = myConnection.prepareStatement(SQL);
-			myStatement.setLong(1, myUser.getIdUser());
-			ResultSet rs  = myStatement.executeQuery();
-			
-			while(rs.next())
-			{
-				Offer Of = new Offer();
-				Of.setIdAdvertisment(rs.getLong(1));
-				Of.setNewPrice(rs.getFloat(3));
-				Of.setIdBuyer(rs.getLong(2));
-				Of.setIdOffer(rs.getLong(4));
-				myList.add(Of);
-			}
-			myStatement.close();
-			myBdd.disconnect();
-			return myList;
-		}
-		catch (SQLException e) 
-		{
-			System.out.println(e.getMessage());
-			myBdd.disconnect();
-			return myList;
-		}
-	}*/
 	
 	/**
-	 * Gets the user list propositions.
+	 * Gets the list of propositions of the user in parametres
 	 *
 	 * @param myUser the my user
 	 * @return the user list propositions
@@ -248,7 +208,6 @@ public class UserDAO
 	 * @param myUser the my user
 	 * @return the user mail
 	 */
-	/*renvoie le mail de l'utilsiateur passé en parametre */
 	public String getUserMail(User myUser)
 	{
 		Database myBdd = new Database();
@@ -278,7 +237,7 @@ public class UserDAO
 	}
 	
 	/**
-	 * Insert user.
+	 * Insert the user in parameters into the database
 	 *
 	 * @param userToCreate the user to create
 	 * @return true, if successful
@@ -308,12 +267,11 @@ public class UserDAO
 	}
 	
 	/**
-	 * Username input checker.
+	 * Checks if the username in parameters is not already taken by someone
 	 *
 	 * @param username the username
-	 * @return true, if successful
+	 * @return true if the username is not used
 	 */
-	/* renvoie false si le nom username est deja utilisé, sinon vrai*/
 	public boolean usernameInputChecker(String username)
 	{
 		Database myBdd = new Database();
@@ -354,10 +312,10 @@ public class UserDAO
 	}
 	
 	/**
-	 * Mail input checker.
+	 * Checks if the mail in parameters is not already taken by someone
 	 *
 	 * @param mail the mail
-	 * @return true, if successful
+	 * @return true if the mail is not used
 	 */
 	/* renvoie false si le nom username est deja utilisé, sinon vrai*/
 	public boolean mailInputChecker(String mail)

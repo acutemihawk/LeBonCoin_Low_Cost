@@ -44,7 +44,7 @@ public class MainController
 	}
 	
 	/**
-	 * User connect.
+	 * Connects the user to the data base with the given entries
 	 *
 	 * @param username the username
 	 * @param password the password
@@ -72,7 +72,7 @@ public class MainController
 	}
 	
 	/**
-	 * Creates the account.
+	 * Creates a new user account into the database with the given entries
 	 *
 	 * @param username the username
 	 * @param password the password
@@ -108,7 +108,7 @@ public class MainController
 	}
 	
 	/**
-	 * Adds the user advertisment.
+	 * Creates and adds an advertisment on the website, the owner is the user calling the method
 	 *
 	 * @param titre the titre
 	 * @param localisation the localisation
@@ -117,7 +117,6 @@ public class MainController
 	 * @param category the category
 	 * @return true, if successful
 	 */
-	/* Ajoute une annonce sur le site */
 	public boolean addUserAdvertisment(String titre, String localisation, float price, String description,String category)
 	{
 		if (testConnection() == false)
@@ -148,12 +147,11 @@ public class MainController
 	}
 	
 	/**
-	 * Del user advertisment.
+	 * Delete an advertisment from the user calling the method on the website
 	 *
 	 * @param idAdvToDel the id adv to del
 	 * @return true, if successful
 	 */
-	/* Retire l'annonce sur le site ayant pour id=idAdvToDel */
 	@SuppressWarnings("unlikely-arg-type")
 	public boolean delUserAdvertisment(long idAdvToDel)
 	{
@@ -174,53 +172,52 @@ public class MainController
 	}
 	
 	/**
-	 * Adds the user proposition.
+	 * Makes a proposition to an advertisment with a price
 	 *
 	 * @param idAdv the id adv
 	 * @param newPrice the new price
 	 * @return true, if successful
 	 */
-	/* fait une proposition avec newPrice sur l'annonce ayant idAdv pour id */
 	public boolean addUserProposition(long idAdv,float newPrice)
-	{
-		if (testConnection() == false)
-			return false;
-		
-		if(newPrice <0)
-		{
-			System.out.println("Please put a price that is above 0$");
-			return false;
-		}
-		
-		Advertisment adTmp = new Advertisment();
-		adTmp.setIdAdvertisment(idAdv);
-		if(myAdvDAO.verify(adTmp) == false)
-			return false;
-			
-		this.myOffer.setIdAdvertisment(idAdv);
-		this.myOffer.setNewPrice(newPrice);
-		this.myOffer.setIdBuyer(myUser.getIdUser());
-		
-		if(myOfDAO.insertInformation(myOffer) ==true) 
-		{
-			myOffer.setIdOffer(myOfDAO.getLastOfferID());
-			myUser.getListOffer().add((int) myOffer.getIdOffer());
-			myOfDAO.insertOf(myOffer);
-			
-			System.out.println("Offer successfully created !");
-			return true;
-		}
-		else
-			return false;
-	}
+    {
+        if (testConnection() == false)
+            return false;
+        
+        if(newPrice <0)
+        {
+            System.out.println("Please put a price that is above 0$");
+            return false;
+        }
+        
+        Advertisment adTmp = new Advertisment();
+        adTmp.setIdAdvertisment(idAdv);
+        if(myAdvDAO.verify(adTmp) == false)
+            return false;
+        
+        Offer Offer = new Offer();
+        Offer.setIdAdvertisment(idAdv);
+        Offer.setNewPrice(newPrice);
+        Offer.setIdBuyer(myUser.getIdUser());
+        
+        if(myOfDAO.insertInformation(Offer) == true) 
+        {
+            Offer.setIdOffer(myOfDAO.getLastOfferID());
+            myUser.getListOffer().add((int) Offer.getIdOffer());
+            myOfDAO.insertOf(Offer);
+            
+            System.out.println("Offer successfully created !");
+            return true;
+        }
+        else
+            return false;
+    }
 
 	/**
-	 * Del user proposition.
+	 * Deletes a proposition to an advertisment
 	 *
-	 * @param idOffer the id offer
+	 * @param idOffer the id offer deleted
 	 * @return true, if successful
 	 */
-	/* Supprime une proposition faite sur une annonce avec l'id de la proposition en parametre */
 	public boolean delUserProposition(long idOffer)
     {
         if (testConnection() == false)
@@ -245,12 +242,12 @@ public class MainController
     }
 	
 	/**
-	 * Accept offer.
+	 * Accept an offer from another user, deletes all other propositions on 
+	 * the sold advertisment and deletes the advertisment from the website
 	 *
-	 * @param idOffer the id offer
+	 * @param idOffer the id offer accepted
 	 * @return true, if successful
 	 */
-	// Accepte l'offre avec pour id = idOffer -> supprime toutes les autres propositions sur l'offre et retire l'annonce de l'application
 	public boolean acceptOffer(long idOffer)
 	{
 		if (testConnection() == false)
@@ -274,12 +271,11 @@ public class MainController
 }
 	
 	/**
-	 * Refuse offer.
+	 * Refuse an offer made by a user on an advertisment
 	 *
-	 * @param idOffer the id offer
+	 * @param idOffer the id offer refused
 	 * @return true, if successful
 	 */
-	// Supprime l'offre associé a l'annonce ayant pour id idOffer 
 	public boolean refuseOffer(long idOffer)
 	{
 		if (testConnection() == false)
@@ -302,11 +298,10 @@ public class MainController
 	}
 	
 	/**
-	 * Gets the user propositions.
+	 * Gets an arrayList of offer that represents all of the proposition made by the user to different advertisement 
 	 *
 	 * @return the user propositions
 	 */
-	/* returns an arrayList of offer that represents all of the proposition made by the user to different advertisment */
 	public ArrayList<Offer> getUserPropositions()
 	{
 		if (testConnection() == false)
@@ -326,7 +321,7 @@ public class MainController
 	}
 	
 	/**
-	 * Gets the user received offer.
+	 * Gets all of the offer received on all advertisment sold by the user
 	 *
 	 * @return the user received offer
 	 */
@@ -371,7 +366,7 @@ public class MainController
 	}
 	
 	/**
-	 * Test connection.
+	 * Test connection to database.
 	 *
 	 * @return true, if successful
 	 */

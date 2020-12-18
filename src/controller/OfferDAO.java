@@ -5,8 +5,19 @@ import java.util.ArrayList;
 
 import model.Offer;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class OfferDAO.
+ */
 public class OfferDAO
 {
+	
+	/**
+	 * Insert of.
+	 *
+	 * @param Of the of
+	 * @return true, if successful
+	 */
 	/* insere dans la table offer l'offre passée en parametre */
 	public boolean insertOf(Offer Of)
 	{
@@ -36,6 +47,12 @@ public class OfferDAO
 		}
 	}
 	
+	/**
+	 * Insert information.
+	 *
+	 * @param Of the of
+	 * @return true, if successful
+	 */
 	public boolean insertInformation(Offer Of) 
 	{
 		Database myDB = new Database();
@@ -63,6 +80,12 @@ public class OfferDAO
 	}
 
 	
+	/**
+	 * Delete of.
+	 *
+	 * @param Of the of
+	 * @return true, if successful
+	 */
 	/* delete de la table offre l'offre passée en parametre puis appelle la fonction deleteOfferInfo */
 	public boolean deleteOf(Offer Of)
 	{
@@ -90,6 +113,12 @@ public class OfferDAO
 		}
 	}
 	
+	/**
+	 * Delete offer info.
+	 *
+	 * @param Of the of
+	 * @return true, if successful
+	 */
 	/* delete dans la table offreinfo les informations de l'offre passée en parametre dans la base de données */
 	private boolean deleteOfferInfo(Offer Of)
 	{
@@ -115,6 +144,12 @@ public class OfferDAO
 		}
 	}
 	
+	/**
+	 * Delete all offer.
+	 *
+	 * @param Of the of
+	 * @return true, if successful
+	 */
 	/* supprimes toutes les offres sur l'id de l'annonce passé en parametre puis appelle deleteAllOfferInfo*/
 	public boolean deleteAllOffer(Offer Of)
 	{
@@ -149,6 +184,12 @@ public class OfferDAO
 		}
 	}
 	
+	/**
+	 * Delete all offer info.
+	 *
+	 * @param idOf the id of
+	 * @return true, if successful
+	 */
 	private boolean deleteAllOfferInfo(long idOf)
 	{
 		Database myDB = new Database();
@@ -173,6 +214,12 @@ public class OfferDAO
 		}
 	}
 	
+	/**
+	 * Select all offer info.
+	 *
+	 * @param Of the of
+	 * @return the array list
+	 */
 	private ArrayList<Integer> selectAllOfferInfo(Offer Of)
 	{
 		Database myDB = new Database();
@@ -204,6 +251,11 @@ public class OfferDAO
 		}
 	}
 	
+	/**
+	 * Gets the last offer ID.
+	 *
+	 * @return the last offer ID
+	 */
 	/* renvoie l'id offer de l'offer appelant */
 	public long getLastOfferID()
 	{
@@ -236,6 +288,12 @@ public class OfferDAO
 		}
 	}
 	
+	/**
+	 * Gets the adv ID.
+	 *
+	 * @param Of the of
+	 * @return the adv ID
+	 */
 	public long getAdvID(Offer Of)
 	{
 		Database myDB = new Database();
@@ -267,6 +325,12 @@ public class OfferDAO
 		}
 	}
 	
+	/**
+	 * Gets the user ID.
+	 *
+	 * @param Of the of
+	 * @return the user ID
+	 */
 	/* renvoie l'id de l'utilisateur qui a fait l'offre passé en parametre */
 	public long getUserID(Offer Of)
 	{
@@ -300,6 +364,12 @@ public class OfferDAO
 	}
 	
 
+	/**
+	 * Gets the new price.
+	 *
+	 * @param Of the of
+	 * @return the new price
+	 */
 	public float getNewPrice(Offer Of) 
 	{
 		Database myDB = new Database();

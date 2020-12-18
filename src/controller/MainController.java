@@ -4,16 +4,35 @@ import java.util.ArrayList;
 
 import model.*;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class MainController.
+ */
 public class MainController 
 {
+	
+	/** The my user. */
 	private User myUser;
+	
+	/** The my user DAO. */
 	private UserDAO myUserDAO;
+	
+	/** The my adv. */
 	private Advertisment myAdv;
+	
+	/** The my adv DAO. */
 	private AdvertismentDAO myAdvDAO;
+	
+	/** The my offer. */
 	private Offer myOffer;
+	
+	/** The my of DAO. */
 	private OfferDAO myOfDAO;
 
 	
+	/**
+	 * Instantiates a new main controller.
+	 */
 	public MainController() 
 	{
 		myUser = new User();
@@ -24,6 +43,13 @@ public class MainController
 		myOfDAO = new OfferDAO();
 	}
 	
+	/**
+	 * User connect.
+	 *
+	 * @param username the username
+	 * @param password the password
+	 * @return true, if successful
+	 */
 	public boolean userConnect(String username, String password)
 	{
 		Database myBdd = new Database();
@@ -45,6 +71,14 @@ public class MainController
 		return false;
 	}
 	
+	/**
+	 * Creates the account.
+	 *
+	 * @param username the username
+	 * @param password the password
+	 * @param mail the mail
+	 * @return true, if successful
+	 */
 	public boolean createAccount(String username,String password, String mail)
 	{
 		Database myBdd = new Database();
@@ -73,6 +107,16 @@ public class MainController
 		}
 	}
 	
+	/**
+	 * Adds the user advertisment.
+	 *
+	 * @param titre the titre
+	 * @param localisation the localisation
+	 * @param price the price
+	 * @param description the description
+	 * @param category the category
+	 * @return true, if successful
+	 */
 	/* Ajoute une annonce sur le site */
 	public boolean addUserAdvertisment(String titre, String localisation, float price, String description,String category)
 	{
@@ -103,6 +147,12 @@ public class MainController
 			return false;
 	}
 	
+	/**
+	 * Del user advertisment.
+	 *
+	 * @param idAdvToDel the id adv to del
+	 * @return true, if successful
+	 */
 	/* Retire l'annonce sur le site ayant pour id=idAdvToDel */
 	@SuppressWarnings("unlikely-arg-type")
 	public boolean delUserAdvertisment(long idAdvToDel)
@@ -123,6 +173,13 @@ public class MainController
 			return false;
 	}
 	
+	/**
+	 * Adds the user proposition.
+	 *
+	 * @param idAdv the id adv
+	 * @param newPrice the new price
+	 * @return true, if successful
+	 */
 	/* fait une proposition avec newPrice sur l'annonce ayant idAdv pour id */
 	public boolean addUserProposition(long idAdv,float newPrice)
 	{
@@ -157,6 +214,12 @@ public class MainController
 			return false;
 	}
 
+	/**
+	 * Del user proposition.
+	 *
+	 * @param idOffer the id offer
+	 * @return true, if successful
+	 */
 	/* Supprime une proposition faite sur une annonce avec l'id de la proposition en parametre */
 	public boolean delUserProposition(long idOffer)
     {
@@ -181,6 +244,12 @@ public class MainController
         return false;
     }
 	
+	/**
+	 * Accept offer.
+	 *
+	 * @param idOffer the id offer
+	 * @return true, if successful
+	 */
 	// Accepte l'offre avec pour id = idOffer -> supprime toutes les autres propositions sur l'offre et retire l'annonce de l'application
 	public boolean acceptOffer(long idOffer)
 	{
@@ -204,6 +273,12 @@ public class MainController
 		
 }
 	
+	/**
+	 * Refuse offer.
+	 *
+	 * @param idOffer the id offer
+	 * @return true, if successful
+	 */
 	// Supprime l'offre associé a l'annonce ayant pour id idOffer 
 	public boolean refuseOffer(long idOffer)
 	{
@@ -226,6 +301,11 @@ public class MainController
 		return false;
 	}
 	
+	/**
+	 * Gets the user propositions.
+	 *
+	 * @return the user propositions
+	 */
 	/* returns an arrayList of offer that represents all of the proposition made by the user to different advertisment */
 	public ArrayList<Offer> getUserPropositions()
 	{
@@ -245,6 +325,11 @@ public class MainController
 		return myArrayToReturn;
 	}
 	
+	/**
+	 * Gets the user received offer.
+	 *
+	 * @return the user received offer
+	 */
 	/* renvoie une listes des offre recues par l'uitlisateurs */
 	public ArrayList<Offer> getUserReceivedOffer()
 	{
@@ -265,16 +350,31 @@ public class MainController
 		return myArrayToReturn;
 	}
 	
+	/**
+	 * Gets the my user.
+	 *
+	 * @return the my user
+	 */
 	public User getMyUser() 
 	{
 		return myUser;
 	}
 
+	/**
+	 * Sets the my user.
+	 *
+	 * @param myUser the new my user
+	 */
 	public void setMyUser(User myUser) 
 	{
 		this.myUser = myUser;
 	}
 	
+	/**
+	 * Test connection.
+	 *
+	 * @return true, if successful
+	 */
 	private boolean testConnection()
 	{
 		if(myUser.isConnected() == false)
@@ -286,47 +386,97 @@ public class MainController
 			return true;
 	}
 
+	/**
+	 * Gets the my user DAO.
+	 *
+	 * @return the my user DAO
+	 */
 	public UserDAO getMyUserDAO() {
 		return myUserDAO;
 	}
 
+	/**
+	 * Sets the my user DAO.
+	 *
+	 * @param myUserDAO the new my user DAO
+	 */
 	public void setMyUserDAO(UserDAO myUserDAO) {
 		this.myUserDAO = myUserDAO;
 	}
 
+	/**
+	 * Gets the my of DAO.
+	 *
+	 * @return the my of DAO
+	 */
 	public OfferDAO getMyOfDAO() {
 		return myOfDAO;
 	}
 
+	/**
+	 * Sets the my of DAO.
+	 *
+	 * @param myOfDAO the new my of DAO
+	 */
 	public void setMyOfDAO(OfferDAO myOfDAO) {
 		this.myOfDAO = myOfDAO;
 	}
 
+	/**
+	 * Gets the my offer.
+	 *
+	 * @return the my offer
+	 */
 	public Offer getMyOffer() 
 	{
 		return myOffer;
 	}
 
+	/**
+	 * Sets the my offer.
+	 *
+	 * @param myOffer the new my offer
+	 */
 	public void setMyOffer(Offer myOffer) 
 	{
 		this.myOffer = myOffer;
 	}
 
+	/**
+	 * Gets the my adv DAO.
+	 *
+	 * @return the my adv DAO
+	 */
 	public AdvertismentDAO getMyAdvDAO()
 	{
 		return myAdvDAO;
 	}
 
+	/**
+	 * Sets the my adv DAO.
+	 *
+	 * @param myAdvDAO the new my adv DAO
+	 */
 	public void setMyAdvDAO(AdvertismentDAO myAdvDAO) 
 	{
 		this.myAdvDAO = myAdvDAO;
 	}
 
+	/**
+	 * Gets the my adv.
+	 *
+	 * @return the my adv
+	 */
 	public Advertisment getMyAdv()
 	{
 		return myAdv;
 	}
 
+	/**
+	 * Sets the my adv.
+	 *
+	 * @param myAdv the new my adv
+	 */
 	public void setMyAdv(Advertisment myAdv)
 	{
 		this.myAdv = myAdv;

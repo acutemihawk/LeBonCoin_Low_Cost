@@ -3,10 +3,24 @@ import java.sql.*;
 import model.*;
 import java.util.ArrayList;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class UserDAO.
+ */
 public class UserDAO 
 {
+	
+	/**
+	 * Instantiates a new user DAO.
+	 */
 	public UserDAO() {}
 	
+	/**
+	 * Gets the user id.
+	 *
+	 * @param myUser the my user
+	 * @return the user id
+	 */
 	/* renvoie l'id de l'utilisateur passé en parametere */
 	public int getUserId(User myUser)
 	{
@@ -39,6 +53,12 @@ public class UserDAO
 		
 	}
 	
+	/**
+	 * Gets the user name.
+	 *
+	 * @param myUser the my user
+	 * @return the user name
+	 */
 	public String getUserName(User myUser)
     {
         Database myBdd = new Database();
@@ -69,6 +89,12 @@ public class UserDAO
         }    
     }
 	
+	/**
+	 * Gets the user list adv.
+	 *
+	 * @param myUser the my user
+	 * @return the user list adv
+	 */
 	/* renvoie la liste d'advertisment de l'utilisateur passé en parametre*/
 	public ArrayList<Integer> getUserListAdv(User myUser)
 	{
@@ -100,6 +126,12 @@ public class UserDAO
 		}
 	}
 	
+	/**
+	 * Gets the user list offer.
+	 *
+	 * @param myUser the my user
+	 * @return the user list offer
+	 */
 	public ArrayList<Integer> getUserListOffer(User myUser)
 	{
 		Database myBdd = new Database();
@@ -171,6 +203,12 @@ public class UserDAO
 		}
 	}*/
 	
+	/**
+	 * Gets the user list propositions.
+	 *
+	 * @param myUser the my user
+	 * @return the user list propositions
+	 */
 	/* renvoie la liste des propositions faites par l'utilisateur passé en parametre */
 	public ArrayList<Integer> getUserListPropositions(User myUser)
 	{
@@ -201,6 +239,12 @@ public class UserDAO
 		}
 	}
 	
+	/**
+	 * Gets the user mail.
+	 *
+	 * @param myUser the my user
+	 * @return the user mail
+	 */
 	/*renvoie le mail de l'utilsiateur passé en parametre */
 	public String getUserMail(User myUser)
 	{
@@ -230,6 +274,12 @@ public class UserDAO
 		}	
 	}
 	
+	/**
+	 * Insert user.
+	 *
+	 * @param userToCreate the user to create
+	 * @return true, if successful
+	 */
 	public boolean insertUser(User userToCreate)
 	{
 		Database myBdd = new Database();
@@ -254,6 +304,12 @@ public class UserDAO
 		
 	}
 	
+	/**
+	 * Username input checker.
+	 *
+	 * @param username the username
+	 * @return true, if successful
+	 */
 	/* renvoie false si le nom username est deja utilisé, sinon vrai*/
 	public boolean usernameInputChecker(String username)
 	{
@@ -293,6 +349,13 @@ public class UserDAO
 			return false;
 		}
 	}
+	
+	/**
+	 * Mail input checker.
+	 *
+	 * @param mail the mail
+	 * @return true, if successful
+	 */
 	/* renvoie false si le nom username est deja utilisé, sinon vrai*/
 	public boolean mailInputChecker(String mail)
 	{

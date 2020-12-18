@@ -5,8 +5,19 @@ import java.util.ArrayList;
 
 import model.Advertisment;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class AdvertismentDAO.
+ */
 public class AdvertismentDAO
 {
+	
+	/**
+	 * Insert ad.
+	 *
+	 * @param ad the ad
+	 * @return true, if successful
+	 */
 	/* créer l'annonce passée en parametere dans la base de donnée */
 	public boolean insertAd(Advertisment ad)
 	{
@@ -38,6 +49,12 @@ public class AdvertismentDAO
 		}
 	}
 	
+	/**
+	 * Delete ad.
+	 *
+	 * @param ad the ad
+	 * @return true, if successful
+	 */
 	/* delete de la base de donnée l'annonce passée en parametre */
 	public boolean deleteAd(Advertisment ad)
 	{
@@ -64,6 +81,11 @@ public class AdvertismentDAO
 		}
 	}
 	
+	/**
+	 * Gets the last ID.
+	 *
+	 * @return the last ID
+	 */
 	/*renvoie le dernier id de l'annonce inserée */
 	public long getLastID()
 	{
@@ -95,6 +117,15 @@ public class AdvertismentDAO
 		}
 	}
 	
+	/**
+	 * Search.
+	 *
+	 * @param category the category
+	 * @param minPrice the min price
+	 * @param maxPrice the max price
+	 * @param localisation the localisation
+	 * @return the array list
+	 */
 	/* envoie le resultat de la recherche avec les parametre titre, prix min, prix max, category */
 	public ArrayList<Advertisment> search(String category, float minPrice, float maxPrice,String localisation)
 	{
@@ -138,6 +169,11 @@ public class AdvertismentDAO
 		}
 	}
 	
+	/**
+	 * Gets the category.
+	 *
+	 * @return the category
+	 */
 	public ArrayList<String> getCategory()
 	{
 		Database myDB = new Database();
@@ -169,6 +205,12 @@ public class AdvertismentDAO
 		}		
 	}
 	
+	/**
+	 * Gets the advertisments from category.
+	 *
+	 * @param category the category
+	 * @return the advertisments from category
+	 */
 	public ArrayList<Advertisment> getAdvertismentsFromCategory(String category)
 	{
 		Database myDB = new Database();
@@ -207,6 +249,12 @@ public class AdvertismentDAO
 		}
 	}
 	
+	/**
+	 * Gets the user advertisments.
+	 *
+	 * @param idUser the id user
+	 * @return the user advertisments
+	 */
 	public ArrayList<Advertisment> getUserAdvertisments(long idUser)
 	{
 		Database myDB = new Database();
@@ -245,6 +293,12 @@ public class AdvertismentDAO
 		}
 	}
 	
+	/**
+	 * Verify.
+	 *
+	 * @param ad the ad
+	 * @return true, if successful
+	 */
 	/*verifie que l'annonce passée en parametre existe dans la base de donnée */
 	public boolean verify(Advertisment ad) 
 	{

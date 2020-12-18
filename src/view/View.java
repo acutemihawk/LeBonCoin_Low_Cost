@@ -7,13 +7,28 @@ import java.util.Scanner;
 import controller.*;
 import model.*;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class View.
+ */
 public class View
 {
+	
+	/** The main controller. */
 	private MainController mainController;
+	
+	/** The my scanner. */
 	private Scanner myScanner ;
+	
+	/** The given str. */
 	private String given_Str;
+	
+	/** The option number. */
 	private int option_number;
 	
+	/**
+	 * Instantiates a new view.
+	 */
 	public View()
 	{
 		mainController = new MainController();
@@ -23,6 +38,9 @@ public class View
 		
 	}
 	
+	/**
+	 * Main menu.
+	 */
 	//fonction du démarrage de l'application
 	public void mainMenu()
 	{
@@ -90,6 +108,9 @@ public class View
 		}
 	}
 	
+	/**
+	 * Connected user.
+	 */
 	//fonction qui affiche le nouveau menu une fois que l'utilisateur s'est co
 	public void connectedUser()
 	{
@@ -142,6 +163,9 @@ public class View
 		}
 	}
 	
+	/**
+	 * Browse.
+	 */
 	//fonction parcourir
 	public void browse()
 	{
@@ -197,6 +221,9 @@ public class View
 		}
 	}
 	
+	/**
+	 * Creates the account.
+	 */
 	//fonction creation d'un compte
 	public void createAccount()
 	{
@@ -230,6 +257,9 @@ public class View
 		}
 	}
 	
+	/**
+	 * Search.
+	 */
 	//fonction search avec paramètres
 	public void search()
     {
@@ -310,6 +340,11 @@ public class View
 		}
     }
 	
+	/**
+	 * Display category.
+	 *
+	 * @param category_name the category name
+	 */
 	//fonction qui affiche les categories
 	public void displayCategory(String category_name)
 	{
@@ -372,6 +407,11 @@ public class View
 		}
 	}
 	
+	/**
+	 * Display advertisment.
+	 *
+	 * @param ad the ad
+	 */
 	//fonction qui affiche une annonce
 	public void displayAdvertisment(Advertisment ad)
 	{
@@ -409,6 +449,9 @@ public class View
 		}
 	}
 	
+	/**
+	 * Creates the advertisment.
+	 */
 	public void createAdvertisment()
 	{
 		try
@@ -456,6 +499,9 @@ public class View
 		}
 	}
 	
+	/**
+	 * Display user propositions.
+	 */
 	public void displayUserPropositions()
 	{
 		System.out.println("----------------------------------------------------------------------");
@@ -515,6 +561,9 @@ public class View
 		}
 	}
 	
+	/**
+	 * Display user received offer.
+	 */
 	public void displayUserReceivedOffer()
 	{
 		try
@@ -585,6 +634,9 @@ public class View
 		}
 	}
 	
+	/**
+	 * Make offer.
+	 */
 	//fonction creation d'une offre
 	public void makeOffer()
 	{
@@ -614,6 +666,9 @@ public class View
 		}
 	}
 	
+	/**
+	 * Display user advertisments.
+	 */
 	public void displayUserAdvertisments()
 	{
 		int numberToDisplay = 3;

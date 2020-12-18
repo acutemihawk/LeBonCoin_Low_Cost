@@ -1,12 +1,26 @@
 package controller;
 import java.sql.*;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class Database.
+ */
 public class Database 
 {
+	
+	/** The my con. */
 	private Connection myCon;
 	
+	/**
+	 * Instantiates a new database.
+	 */
 	public Database() {}
 	
+	/**
+	 * Connect.
+	 *
+	 * @return the connection
+	 */
 	public Connection connect()
 	{
 		try 
@@ -32,6 +46,11 @@ public class Database
 		}
 	}
 	
+	/**
+	 * Disconnect.
+	 *
+	 * @return true, if successful
+	 */
 	public boolean disconnect()
 	{
 		try
@@ -47,6 +66,13 @@ public class Database
 		}
 	}
 	
+	/**
+	 * Authentificate.
+	 *
+	 * @param username the username
+	 * @param password the password
+	 * @return true, if successful
+	 */
 	public boolean authentificate(String username, String password)
 	{
 		if(myCon == null)

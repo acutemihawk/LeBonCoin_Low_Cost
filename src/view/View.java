@@ -172,7 +172,7 @@ public class View
 		ArrayList<String> categoriesArray = new ArrayList<String>();
 		int numberToDisplay = 0;
 		
-		categoriesArray = mainController.getMyAdvDAO().getCategory();
+		categoriesArray = mainController.getMyAdvDAO().getCategories();
 		
 		System.out.println("----------------------------------------------------------------------");
 		System.out.println("Choose one option from below and press Enter to navigate :");

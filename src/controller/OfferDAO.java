@@ -13,7 +13,7 @@ public class OfferDAO
 {
 	
 	/**
-	 * Insert of.
+	 * Insert an offer .
 	 *
 	 * @param Of the of
 	 * @return true, if successful
@@ -26,7 +26,7 @@ public class OfferDAO
 		
 		try
 		{
-			String sqlCommand = "INSERT INTO offer (idoffer,idAdvertisment, iduser) VALUES (?,?,?)";
+			String sqlCommand = "INSERT INTO offer (idoffer,idAdverti sment, iduser) VALUES (?,?,?)";
 			PreparedStatement myStatement = myConnection.prepareStatement(sqlCommand, ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
 			
 			myStatement.setLong(1, Of.getIdOffer());

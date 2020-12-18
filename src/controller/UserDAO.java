@@ -13,7 +13,10 @@ public class UserDAO
 	/**
 	 * Instantiates a new user DAO.
 	 */
-	public UserDAO() {}
+	public UserDAO()
+	{
+		
+	}
 	
 	/**
 	 * Gets the user id.

@@ -14,12 +14,15 @@ public class Database
 	/**
 	 * Instantiates a new database.
 	 */
-	public Database() {}
+	public Database()
+	{
+		
+	}
 	
 	/**
-	 * Connect.
+	 * Connect to the database.
 	 *
-	 * @return the connection
+	 * @return the connection object
 	 */
 	public Connection connect()
 	{
@@ -47,7 +50,7 @@ public class Database
 	}
 	
 	/**
-	 * Disconnect.
+	 * Disconnect from the database.
 	 *
 	 * @return true, if successful
 	 */
@@ -56,7 +59,6 @@ public class Database
 		try
 		{
 			myCon.close();
-			//System.out.println("Succesfully disconnected from database !");
 			return true;
 		}
 		catch(SQLException e)
@@ -67,10 +69,10 @@ public class Database
 	}
 	
 	/**
-	 * Authentificate.
+	 * Authentificate the user by its username and password given in parameters.
 	 *
-	 * @param username the username
-	 * @param password the password
+	 * @param username the username of the user
+	 * @param password the password of the user
 	 * @return true, if successful
 	 */
 	public boolean authentificate(String username, String password)
@@ -91,7 +93,7 @@ public class Database
 			
 			if(myResult.next() == false)
 			{
-				System.out.println("Username ou/et mot de passe erroné(s), vérifiez que vous disposez bien d'un compte !");
+				System.out.println("Username or/and password incorrect, please check if you have an existing account !");
 				return false;
 			}
 			else

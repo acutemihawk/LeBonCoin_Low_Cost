@@ -13,12 +13,11 @@ public class AdvertismentDAO
 {
 	
 	/**
-	 * Insert ad.
+	 * Insert an advertisment into the database.
 	 *
-	 * @param ad the ad
+	 * @param ad the advertisment
 	 * @return true, if successful
 	 */
-	/* créer l'annonce passée en parametere dans la base de donnée */
 	public boolean insertAd(Advertisment ad)
 	{
 		Database myDB = new Database();
@@ -50,12 +49,11 @@ public class AdvertismentDAO
 	}
 	
 	/**
-	 * Delete ad.
+	 * Delete an advertisment in the database.
 	 *
-	 * @param ad the ad
+	 * @param ad the advertisment
 	 * @return true, if successful
 	 */
-	/* delete de la base de donnée l'annonce passée en parametre */
 	public boolean deleteAd(Advertisment ad)
 	{
 		Database myDB = new Database();
@@ -82,11 +80,10 @@ public class AdvertismentDAO
 	}
 	
 	/**
-	 * Gets the last ID.
+	 * Gets the ID of the last advertisment created
 	 *
 	 * @return the last ID
 	 */
-	/*renvoie le dernier id de l'annonce inserée */
 	public long getLastID()
 	{
 		Database myDB = new Database();
@@ -118,15 +115,14 @@ public class AdvertismentDAO
 	}
 	
 	/**
-	 * Search.
+	 * Search for the advertisments that correspond to the criterias given in parameters.
 	 *
 	 * @param category the category
-	 * @param minPrice the min price
-	 * @param maxPrice the max price
+	 * @param minPrice the minimum price
+	 * @param maxPrice the maximum price
 	 * @param localisation the localisation
-	 * @return the array list
+	 * @return the array list of advertisment
 	 */
-	/* envoie le resultat de la recherche avec les parametre titre, prix min, prix max, category */
 	public ArrayList<Advertisment> search(String category, float minPrice, float maxPrice,String localisation)
 	{
 		Database myDB = new Database();
@@ -170,11 +166,11 @@ public class AdvertismentDAO
 	}
 	
 	/**
-	 * Gets the category.
+	 * Gets the list of category's names.
 	 *
-	 * @return the category
+	 * @return the list of names
 	 */
-	public ArrayList<String> getCategory()
+	public ArrayList<String> getCategories()
 	{
 		Database myDB = new Database();
 		Connection myConnection = myDB.connect();
@@ -206,10 +202,10 @@ public class AdvertismentDAO
 	}
 	
 	/**
-	 * Gets the advertisments from category.
+	 * Gets the list of advertisments in a given category.
 	 *
-	 * @param category the category
-	 * @return the advertisments from category
+	 * @param category the name of the category
+	 * @return the list of advertisments
 	 */
 	public ArrayList<Advertisment> getAdvertismentsFromCategory(String category)
 	{
@@ -250,9 +246,9 @@ public class AdvertismentDAO
 	}
 	
 	/**
-	 * Gets the user advertisments.
+	 * Gets an user's advertisments.
 	 *
-	 * @param idUser the id user
+	 * @param idUser the user id
 	 * @return the user advertisments
 	 */
 	public ArrayList<Advertisment> getUserAdvertisments(long idUser)
@@ -294,12 +290,11 @@ public class AdvertismentDAO
 	}
 	
 	/**
-	 * Verify.
+	 * Verify that the given advertisment exists in the database.
 	 *
-	 * @param ad the ad
-	 * @return true, if successful
+	 * @param ad the advertisment to check
+	 * @return true, if true
 	 */
-	/*verifie que l'annonce passée en parametre existe dans la base de donnée */
 	public boolean verify(Advertisment ad) 
 	{
 		Database myDB = new Database();

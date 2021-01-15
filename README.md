@@ -1,4 +1,4 @@
 # LeBonCoin_Low_Cost
- projet sgbd java
+projet sgbd java jdbc
 
 Regarder le pdf.
